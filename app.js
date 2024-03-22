@@ -1,4 +1,5 @@
 require('dotenv').config();
+const path = require('node:path');
 const express = require('express');
 const connectDB = require('./db/connect');
 
@@ -6,8 +7,12 @@ const notFoundMiddleware = require('./middleware/notFound');
 
 const app = express();
 
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.get('/', (req, res) => {
-  res.send('Inventory Application');
+  res.render('index', { title: 'hello world' });
 });
 
 app.use(notFoundMiddleware);
