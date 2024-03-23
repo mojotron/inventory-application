@@ -1,0 +1,26 @@
+doctype html 
+html(lang="en")
+  head 
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
+    link(href="./styles/main.css", rel="stylesheet")
+  body.p-3.sm_p-10.flex.flex-col.gap-6.bg-gray-900.font-sans.text-gray-200.min-w-screen.min-h-screen
+    h1.font-display.uppercase.font-bold.text-5xl.text-center Item Inventory 
+    
+    main.flex.gap-3
+      aside
+        ul
+          li 
+            a(href="/inventory/weapons").hover_underline.hover_text-gold-500  weapons
+          li 
+            a(href="/inventory/armor").hover_underline.hover_text-gold-500  armor
+          li 
+            a(href="/inventory/consumables").hover_underline.hover_text-gold-500  consumables
+
+    section 
+      block content
+
+  block foot
+  footer.mt-auto.text-center 
+    a(href="").hover_text-gold-500 @mojotron

@@ -9,6 +9,8 @@ Implementation of CRUD application.
 
 - Node.js
 - Express
+- Pug
+- Tailwind CSS
 
 ### Installing
 
