@@ -1,0 +1,12 @@
+extends layout.pug 
+block content 
+  h1.font-display.font-bold.text-3xl weapon type list
+  if weaponTypeList.length
+    ul 
+      for weapon in weaponTypeList 
+        li 
+          a(href=weapon.url) !{weapon.name}  
+  else 
+    p no weapons
+
+  a(href="/inventory/weapons/create-type") Create new weapon type

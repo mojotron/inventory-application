@@ -1,0 +1,9 @@
+extends layout.pug 
+block content 
+  h2.font-display.font-bold.text-3xl create new weapon type 
+
+  form(action="" method="POST").flex.flex-col.items-center.gap-4
+    input(type="text" placeholder="sword, axe..." name="weaponTypeName" required).px-4.py-2.bg-gray-900.rounded-md.border.border-gray-200.outline-none.focus_ring.focus_ring-gold-500
+    button(type="submit").border.border-gray-200.rounded-md.px-4.py-2.font-display.font-bold.text-3xl.hover_bg-gold-500.hover_text-gray-900 create 
+
+  p !{error === undefined ? "" : error}

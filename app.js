@@ -2,6 +2,7 @@ require('dotenv').config();
 const path = require('node:path');
 const express = require('express');
 const connectDB = require('./db/connect');
+const inventoryRouter = require('./routes/inventoryRoutes.js');
 
 const notFoundMiddleware = require('./middleware/notFound');
 
@@ -10,6 +11,9 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: false }));
+
+app.use('/inventory', inventoryRouter);
 
 app.get('/', (req, res) => {
   res.render('layout');
