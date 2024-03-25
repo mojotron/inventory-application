@@ -20,6 +20,9 @@ app.get('/', (req, res) => {
 });
 
 app.use(notFoundMiddleware);
+app.use((err, req, res) => {
+  res.status(500).send('Internal Server Error');
+});
 
 const PORT = process.env.PORT || 5000;
 
