@@ -3,6 +3,9 @@ const {
   allWeaponTypes,
   createWeaponTypeGet,
   createWeaponTypePost,
+  allWeapons,
+  createWeaponGet,
+  createWeaponPost,
 } = require('../controllers/inventoryController.js');
 
 const weaponTypeValidator = require('../validators/weaponType.js');
@@ -12,5 +15,8 @@ const router = express.Router();
 router.get('/weapons', allWeaponTypes);
 router.get('/weapons/create-type', createWeaponTypeGet);
 router.post('/weapons/create-type', weaponTypeValidator, createWeaponTypePost);
+router.get('/weapons/:weaponType', allWeapons);
+router.get('/weapons/:weaponType/create', createWeaponGet);
+router.post('/weapons/:weaponType/create', createWeaponPost);
 
 module.exports = router;

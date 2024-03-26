@@ -4,11 +4,11 @@ const { validationResult } = require('express-validator');
 
 const allWeaponTypes = asyncHandler(async (req, res) => {
   const allWeaponTypes = await WeaponType.find({}).sort({ name: 1 });
-  res.render('weaponList', { weaponTypeList: allWeaponTypes });
+  res.render('weaponTypeList', { weaponTypeList: allWeaponTypes });
 });
 
 const createWeaponTypeGet = (req, res) => {
-  res.render('weaponTypeForm', { error: [] });
+  res.render('weaponTypeForm', { errors: [] });
 };
 
 const createWeaponTypePost = asyncHandler(async (req, res) => {
@@ -34,4 +34,23 @@ const createWeaponTypePost = asyncHandler(async (req, res) => {
   res.redirect('/inventory/weapons');
 });
 
-module.exports = { allWeaponTypes, createWeaponTypeGet, createWeaponTypePost };
+const allWeapons = asyncHandler(async (req, res) => {
+  res.render('weaponList', { weaponType: req.params.weaponType });
+});
+
+const createWeaponGet = (req, res) => {
+  res.render('weaponCreateForm', {
+    weaponType: req.params.weaponType,
+    errors: [],
+  });
+};
+const createWeaponPost = () => {};
+
+module.exports = {
+  allWeaponTypes,
+  createWeaponTypeGet,
+  createWeaponTypePost,
+  allWeapons,
+  createWeaponGet,
+  createWeaponPost,
+};
