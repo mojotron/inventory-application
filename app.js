@@ -4,7 +4,8 @@ const express = require('express');
 const connectDB = require('./db/connect');
 const inventoryRouter = require('./routes/inventoryRoutes.js');
 
-const notFoundMiddleware = require('./middleware/notFound');
+const notFoundMiddleware = require('./middleware/notFound.js');
+const errorHandlerMiddleware = require('./middleware/errorHandler.js');
 
 const app = express();
 
@@ -20,9 +21,7 @@ app.get('/', (req, res) => {
 });
 
 app.use(notFoundMiddleware);
-app.use((err, req, res) => {
-  res.status(500).send('Internal Server Error');
-});
+app.use(errorHandlerMiddleware);
 
 const PORT = process.env.PORT || 5000;
 

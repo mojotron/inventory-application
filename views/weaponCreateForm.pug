@@ -1,12 +1,30 @@
 extends layout 
+
 block content
   h2.font-display.font-bold.text-5xl create new !{weaponType} 
 
   form(action="" method="POST").my-4.flex.flex-col.items-center.gap-4
-    input(type="text" placeholder="sword, axe..." name="weaponTypeName" required).text-gold-500.font-bold.w-full.px-4.py-2.bg-gray-800.rounded-md.border.border-poor.tracking-wider.outline-none.focus_ring.focus_ring-gold-500
+    label(for="weaponName") Name
+    input(type="text" placeholder="Goblin Slayer" name="name" required value= formValues.name)#weaponName.text-gold-500.font-bold.w-full.px-4.py-2.bg-gray-800.rounded-md.border.border-poor.tracking-wider.outline-none.focus_ring.focus_ring-gold-500.placeholder_text-poor
+
+    label(for="weaponAttackPower") Attack Power
+    input(type="number" placeholder="5" name="attackPower" min="1" max="100" required value= formValues.attackPower)#weaponAttackPower.text-gold-500.font-bold.w-full.px-4.py-2.bg-gray-800.rounded-md.border.border-poor.tracking-wider.outline-none.focus_ring.focus_ring-gold-500.placeholder_text-poor
+
+    label(for="weaponDescription") description
+    textArea(type="text" placeholder="Goblins flee in fear on sight!" name="description" required maxlength="150" )#weaponDescription.text-gold-500.font-bold.w-full.px-4.py-2.bg-gray-800.rounded-md.border.border-poor.tracking-wider.outline-none.focus_ring.focus_ring-gold-500.placeholder_text-poor !{formValues.description}
+
+    label(for="weaponQuality") item quality
+    select(name="itemQuality")#weaponQuality.text-gold-500.font-bold.w-full.px-4.py-2.bg-gray-800.rounded-md.border.border-poor.tracking-wider.outline-none.focus_ring.focus_ring-gold-500
+      each item in ['poor', 'common', 'uncommon', 'rare', 'epic', 'legendary'] 
+        option(value= item) #{item}
+    
+    
+    
     if errors.length 
-      ul 
+      ul.space-y-2 
         for error in errors
           li.text-error.border.border-error.px-6.py-1.rounded-md !{error.msg}
 
     button(type="submit").my-4.border.border-gray-200.rounded-md.px-4.py-1.font-display.font-bold.text-2xl.tracking-wider.hover_bg-gold-500.hover_text-gray-900.hover_border-gray-900.transition-all.duration-150 create !{weaponType}
+
+  
