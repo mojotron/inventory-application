@@ -27,4 +27,18 @@ module.exports = {
   },
   plugins: [],
   separator: '_',
+  safelist: [
+    'text-poor',
+    'text-common',
+    'text-uncommon',
+    'text-rare',
+    'text-epic',
+    'text-legendary',
+    'border-poor',
+    'border-common',
+    'border-uncommon',
+    'border-rare',
+    'border-epic',
+    'border-legendary',
+  ],
 };

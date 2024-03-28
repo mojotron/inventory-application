@@ -37,8 +37,20 @@ const createWeaponTypePost = asyncHandler(async (req, res) => {
 });
 
 const allWeapons = asyncHandler(async (req, res) => {
-  const weapons = await Weapon({});
-  res.render('weaponList', { weaponType: req.params.weaponType });
+  const { weaponType } = req.params;
+  const weaponTypeDoc = await WeaponType.findOne({ name: weaponType });
+  console.log(weaponTypeDoc);
+  const allWeapons = await Weapon.find({ type: weaponTypeDoc._id });
+  res.render('weaponList', {
+    weaponType: req.params.weaponType,
+    weaponList: allWeapons,
+  });
+});
+// GET SINGLE WEAPON
+const getWeapon = asyncHandler(async (req, res) => {
+  const { weaponType, weaponName } = req.params;
+  const weaponDoc = await Weapon.findOne({ name: weaponName });
+  res.render('weaponDetails', { weapon: weaponDoc, weaponType });
 });
 
 const createWeaponGet = (req, res) => {
@@ -83,12 +95,25 @@ const createWeaponPost = asyncHandler(async (req, res) => {
 
   res.redirect(`/inventory/weapons/${weaponType}`);
 });
+// DELETE WEAPON
+const deleteWeaponGet = (req, res) => {
+  const { weaponType, weaponName } = req.params;
+  res.render('weaponDelete', { weaponType, weaponName });
+};
+
+const deleteWeaponPost = asyncHandler(async (req, res) => {
+  const { weaponType, weaponName } = req.params;
+  res.redirect(`/inventory/weapons/${weaponType}`);
+});
 
 module.exports = {
   allWeaponTypes,
   createWeaponTypeGet,
   createWeaponTypePost,
   allWeapons,
+  getWeapon,
   createWeaponGet,
   createWeaponPost,
+  deleteWeaponGet,
+  deleteWeaponPost,
 };
