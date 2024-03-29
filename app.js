@@ -14,11 +14,11 @@ app.set('view engine', 'pug');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/inventory', inventoryRouter);
-
 app.get('/', (req, res) => {
   res.render('layout');
 });
+
+app.use('/inventory', inventoryRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

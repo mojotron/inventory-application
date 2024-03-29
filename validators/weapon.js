@@ -6,9 +6,9 @@ const validators = [
     .notEmpty()
     .withMessage('name field is required')
     .toLowerCase()
-    .isAlphanumeric()
+    .matches(/[a-z0-9 ]*/)
     .withMessage(
-      'name contains invalid character, please use letters and numbers',
+      'name contains invalid character, please use letters and numbers and space',
     )
     .isLength({ min: 3, max: 25 })
     .withMessage('name must be between 3 and 25 characters')

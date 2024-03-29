@@ -2,7 +2,7 @@ extends layout
 block content 
   article.w-full.max-w-96.sm_w-96.border-4.px-8.pt-4.pb-8.rounded-md.flex.flex-col.gap-y-4(class=`border-${weapon.itemQuality}`)
     div.ml-auto.space-x-4
-      a.hover_underline.hover_text-gold-500.cursor-pointer edit 
+      a(href=`/inventory/weapons/${weaponType}/${weapon.name}/update`).hover_underline.hover_text-common.cursor-pointer edit 
       a(href=`/inventory/weapons/${weaponType}/${weapon.name}/delete`).hover_underline.hover_text-error.cursor-pointer delete
 
     header

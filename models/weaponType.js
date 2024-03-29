@@ -6,6 +6,8 @@ const weaponTypeSchema = new mongoose.Schema({
     required: [true, 'name is required'],
     unique: true,
     lowerCase: true,
+    maxLength: 30,
+    minLength: 3,
   },
   createdAt: {
     type: Date,
