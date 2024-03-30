@@ -1,5 +1,4 @@
 extends layout 
-
 block content
   h2.font-display.font-bold.text-5xl create new !{weaponType} 
 
@@ -15,8 +14,8 @@ block content
 
     label(for="weaponQuality") item quality
     select(name="itemQuality")#weaponQuality.text-gold-500.font-bold.w-full.px-4.py-2.bg-gray-800.rounded-md.border.border-poor.tracking-wider.outline-none.focus_ring.focus_ring-gold-500
-      each item in itemQuality 
-        option(value= item) #{item}
+      each item in itemQualityOptions 
+        option(value= item selected= formValues.itemQuality) #{item}
     
     
     
@@ -25,6 +24,4 @@ block content
         for error in errors
           li.text-error.border.border-error.px-6.py-1.rounded-md !{error.msg}
 
-    button(type="submit").my-4.border.border-gray-200.rounded-md.px-4.py-1.font-display.font-bold.text-2xl.tracking-wider.hover_bg-gold-500.hover_text-gray-900.hover_border-gray-900.transition-all.duration-150 !{buttonDisplay}
-
-  
+    button(type="submit").my-4.border.border-gray-200.rounded-md.px-4.py-1.font-display.font-bold.text-2xl.tracking-wider.hover_bg-gold-500.hover_text-gray-900.hover_border-gray-900.transition-all.duration-150 #{buttonDisplay} 

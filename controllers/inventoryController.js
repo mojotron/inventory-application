@@ -5,7 +5,7 @@ const { StatusCodes } = require('http-status-codes');
 const WeaponType = require('../models/weaponType');
 const Weapon = require('../models/weapon');
 // constants
-const itemQuality = require('../constants/itemQuality');
+const itemQualityOptions = require('../constants/itemQuality');
 // errors
 const { BadRequest } = require('../errors/index');
 
@@ -41,14 +41,17 @@ const createWeaponTypePost = asyncHandler(async (req, res) => {
     return;
   }
 
-  await WeaponType.create({ name: categoryName });
-
+  const newWeaponType = await WeaponType.create({ name: categoryName });
+  if (newWeaponType === null) throw new Error(); // error handler middleware will display default error
   res.status(StatusCodes.CREATED).redirect('/inventory/weapons');
 });
-// GET ALL WEAPONS (category instances) TODO refactor from here
+// GET ALL WEAPONS (category instances)
 const allWeapons = asyncHandler(async (req, res) => {
   const { weaponType } = req.params;
   const weaponTypeDoc = await WeaponType.findOne({ name: weaponType });
+  if (weaponTypeDoc === null) {
+    throw new BadRequest(`Could not find ${weaponType} category`);
+  }
   const allWeapons = await Weapon.find({ type: weaponTypeDoc._id });
   res.render('weaponList', {
     weaponType: req.params.weaponType,
@@ -66,31 +69,33 @@ const getWeapon = asyncHandler(async (req, res) => {
   }
   res.render('weaponDetails', { weapon: weaponDoc, weaponType });
 });
-
+// CREATE NEW WEAPON (category instance)
 const createWeaponGet = (req, res) => {
+  const { weaponType } = req.params;
+
   res.render('weaponCreateForm', {
-    weaponType: req.params.weaponType,
-    itemQuality,
+    weaponType: weaponType,
+    itemQualityOptions,
     errors: [],
     formValues: {
       name: '',
       attackPower: 1,
       description: '',
       itemQuality: 'poor',
-      buttonDisplay: `Create ${req.params.weaponType}`,
     },
+    buttonDisplay: `Create ${weaponType}`,
   });
 };
+
 const createWeaponPost = asyncHandler(async (req, res) => {
   const { weaponType } = req.params;
   const { name, attackPower, description, itemQuality } = req.body;
 
   const errors = validationResult(req);
-
   if (!errors.isEmpty()) {
     res.render('weaponCreateForm', {
       weaponType,
-      itemQuality,
+      itemQualityOptions,
       errors: errors.errors,
       formValues: { name, attackPower, description, itemQuality },
       buttonDisplay: `Create ${weaponType}`,
@@ -103,15 +108,14 @@ const createWeaponPost = asyncHandler(async (req, res) => {
   if (weaponTypeDoc === null) {
     throw new BadRequest(`Could not find ${weaponType} weapon category`);
   }
-
-  await Weapon.create({
+  const newWeapon = await Weapon.create({
     name: name,
     type: weaponTypeDoc._id,
     attackPower: Number(attackPower),
     description,
     itemQuality,
   });
-
+  if (newWeapon === null) throw new Error(); // error handler middleware will display default error
   res.redirect(`/inventory/weapons/${weaponType}`);
 });
 // DELETE WEAPON
@@ -124,11 +128,14 @@ const deleteWeaponPost = asyncHandler(async (req, res) => {
   const { weaponType, weaponName } = req.params;
   const deletedWeapon = await Weapon.findOneAndDelete({ name: weaponName });
   if (deletedWeapon === null) {
-    throw new Error(`Could not ${weaponType} item with name ${weaponName}`);
+    throw new BadRequest(
+      `Could not find ${weaponType} item with name ${weaponName}`,
+    );
   }
   // check if current weapon type has any weapon instance, if not delete weapon type
   const weaponTypeDoc = await WeaponType.findOne({ name: weaponType });
   const allWeaponsWithType = await Weapon.find({ type: weaponTypeDoc._id });
+
   if (allWeaponsWithType.length === 0) {
     await WeaponType.findByIdAndDelete(weaponTypeDoc._id);
     res.redirect(`/inventory/weapons/`);
@@ -141,12 +148,14 @@ const updateWeaponGet = asyncHandler(async (req, res) => {
   const { weaponType, weaponName } = req.params;
   const weaponDoc = await Weapon.findOne({ name: weaponName });
   if (weaponDoc === null) {
-    throw new Error(`Could not ${weaponType} item with name ${weaponName}`);
+    throw new BadRequest(
+      `Could not find ${weaponType} item with name ${weaponName}`,
+    );
   }
 
   res.render('weaponCreateForm', {
     weaponType: weaponType,
-    itemQuality,
+    itemQualityOptions,
     errors: [],
     formValues: {
       name: weaponDoc.name,
@@ -157,6 +166,7 @@ const updateWeaponGet = asyncHandler(async (req, res) => {
     buttonDisplay: `update ${weaponName}`,
   });
 });
+
 const updateWeaponPost = asyncHandler(async (req, res) => {
   const { weaponType, weaponName } = req.params;
   const { name, attackPower, description, itemQuality } = req.body;
@@ -166,7 +176,7 @@ const updateWeaponPost = asyncHandler(async (req, res) => {
   if (!errors.isEmpty()) {
     res.render('weaponCreateForm', {
       weaponType,
-      itemQuality,
+      itemQualityOptions,
       errors: errors.errors,
       formValues: { name, attackPower, description, itemQuality },
       buttonDisplay: `Create ${weaponType}`,
@@ -177,10 +187,12 @@ const updateWeaponPost = asyncHandler(async (req, res) => {
   const weaponDoc = await Weapon.findOne({ name: weaponName });
 
   if (weaponDoc === null) {
-    throw new Error(`Could not ${weaponType} item with name ${weaponName}`);
+    throw new BadRequest(
+      `Could not ${weaponType} item with name ${weaponName}`,
+    );
   }
 
-  const x = await Weapon.findOneAndUpdate(
+  const updatedWeapon = await Weapon.findOneAndUpdate(
     { name: weaponName },
     {
       _id: weaponDoc._id,
@@ -191,9 +203,7 @@ const updateWeaponPost = asyncHandler(async (req, res) => {
       itemQuality,
     },
   );
-
-  console.log(x);
-
+  if (updatedWeapon === null) throw new Error(); // error handler middleware will display default error
   res.redirect(`/inventory/weapons/${weaponType}/`);
 });
 
