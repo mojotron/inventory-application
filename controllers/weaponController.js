@@ -2,17 +2,23 @@ const asyncHandler = require('express-async-handler');
 const { validationResult } = require('express-validator');
 const { StatusCodes } = require('http-status-codes');
 // models
-const WeaponType = require('../models/weaponType');
+const Category = require('../models/category');
 const Weapon = require('../models/weapon');
 // constants
 const itemQualityOptions = require('../constants/itemQuality');
 // errors
 const { BadRequest } = require('../errors/index');
 
-// GET ALL WEAPON TYPES (categories)
-const allWeaponTypes = asyncHandler(async (req, res) => {
-  const allWeaponTypes = await WeaponType.find({}).sort({ name: 1 });
-  res.render('weaponTypeList', { weaponTypeList: allWeaponTypes });
+// GET ALL WEAPON CATEGORIES
+const weaponCategories = asyncHandler(async (req, res) => {
+  const weaponCategories = await Category.find({ category: 'weapon' }).sort({
+    name: 1,
+  });
+
+  res.render('categoryList', {
+    category: 'weapon',
+    categoryList: weaponCategories,
+  });
 });
 // CREATE WEAPON TYPE (create category)
 const createWeaponTypeGet = (req, res) => {
@@ -208,7 +214,7 @@ const updateWeaponPost = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
-  allWeaponTypes,
+  weaponCategories,
   createWeaponTypeGet,
   createWeaponTypePost,
   allWeapons,

@@ -2,7 +2,8 @@ require('dotenv').config();
 const path = require('node:path');
 const express = require('express');
 const connectDB = require('./db/connect');
-const inventoryRouter = require('./routes/inventoryRoutes.js');
+const weaponRouter = require('./routes/weaponRoutes.js');
+const categories = require('./constants/categories.js');
 
 const notFoundMiddleware = require('./middleware/notFound.js');
 const errorHandlerMiddleware = require('./middleware/errorHandler.js');
@@ -16,10 +17,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {
+  console.log(categories);
+  // res.render('layout', { categories }); not working in extends layout -.-
   res.render('layout');
 });
 
-app.use('/inventory', inventoryRouter);
+app.use('/inventory/weapon', weaponRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

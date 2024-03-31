@@ -13,13 +13,9 @@ html(lang="en")
     
     nav
       ul.flex.items-center.gap-4
-        li 
-          a(href="/inventory/weapons").hover_underline.hover_text-gold-500  weapons
-        li 
-          a(href="/inventory/armor").hover_underline.hover_text-gold-500  armor
-        li 
-          a(href="/inventory/consumables").hover_underline.hover_text-gold-500  consumables 
-          
+        each category in ['weapon', 'armor', 'consumable']
+          li 
+            a(href=`/inventory/${category}`).hover_underline.hover_text-gold-500 !{category} 
 
     section.w-full.flex.flex-col.items-center.gap-4 
       block content

@@ -1,12 +1,12 @@
 extends layout.pug 
 block content 
   h2.font-display.font-bold.text-5xl weapon type list
-  if weaponTypeList.length
+  if categoryList.length
     ul.w-full.m-4.px-8.grid.grid-cols-1.sm_grid-cols-3.justify-center.content-center.justify-items-center
-      for weapon in weaponTypeList 
+      for category in categoryList 
         li 
-          a(href=weapon.url).hover_underline.hover_text-gold-500.text-lg !{weapon.name}  
+          a(href=weapon.url).hover_underline.hover_text-gold-500.text-lg !{category.name}  
   else 
-    p no weapons
+    p no items in category
 
   a(href="/inventory/weapons/create").my-4.border.border-gray-200.rounded-md.px-4.py-1.font-display.font-bold.text-2xl.tracking-wider.hover_bg-gold-500.hover_text-gray-900.hover_border-gray-900.transition-all.duration-150 create new weapon type
