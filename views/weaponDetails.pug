@@ -2,8 +2,8 @@ extends layout
 block content 
   article.w-full.max-w-96.sm_w-96.border-4.px-8.pt-4.pb-8.rounded-md.flex.flex-col.gap-y-4(class=`border-${weapon.itemQuality}`)
     div.ml-auto.space-x-4
-      a(href=`/inventory/weapons/${weaponType}/${weapon.name}/update`).hover_underline.hover_text-common.cursor-pointer edit 
-      a(href=`/inventory/weapons/${weaponType}/${weapon.name}/delete`).hover_underline.hover_text-error.cursor-pointer delete
+      a(href=`/inventory/weapon/${weaponCategory}/${weapon.name}/update`).hover_underline.hover_text-common.cursor-pointer edit 
+      a(href=`/inventory/weapon/${weaponCategory}/${weapon.name}/delete`).hover_underline.hover_text-error.cursor-pointer delete
 
     header
       h2.font-display.font-bold.text-4xl.tracking-wider !{weapon.name}
@@ -16,4 +16,4 @@ block content
       p.ml-2.flex.items-center.gap-x-4 item rarity: 
         span.font-bold.text-md.uppercase(class=`text-${weapon.itemQuality}`) !{weapon.itemQuality}
 
-  a(href=`/inventory/weapons/${weaponType}`).cursor-pointer.hover_underline.hover_text-gold-500.text-lg return to !{weaponType} list
+  a(href=`/inventory/weapon/${weaponCategory}`).cursor-pointer.hover_underline.hover_text-gold-500.text-lg return to !{weaponCategory} list

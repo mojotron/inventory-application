@@ -1,8 +1,8 @@
 const express = require('express');
 const {
   weaponCategories,
-  createWeaponTypeGet,
-  createWeaponTypePost,
+  createWeaponCategoryGet,
+  createWeaponCategoryPost,
   allWeapons,
   createWeaponGet,
   createWeaponPost,
@@ -19,15 +19,15 @@ const weaponValidator = require('../validators/weapon.js');
 const router = express.Router();
 
 router.get('/', weaponCategories);
-router.get('/create', createWeaponTypeGet);
-router.post('/create', categoryValidator, createWeaponTypePost);
-router.get('/:weaponType', allWeapons);
-router.get('/:weaponType/create', createWeaponGet);
-router.post('/:weaponType/create', weaponValidator, createWeaponPost);
-router.get('/:weaponType/:weaponName', getWeapon);
-router.get('/:weaponType/:weaponName/delete', deleteWeaponGet);
-router.post('/:weaponType/:weaponName/delete', deleteWeaponPost);
-router.get('/:weaponType/:weaponName/update', updateWeaponGet);
+router.get('/create', createWeaponCategoryGet);
+router.post('/create', categoryValidator, createWeaponCategoryPost);
+router.get('/:weaponCategory', allWeapons);
+router.get('/:weaponCategory/create', createWeaponGet);
+router.post('/:weaponCategory/create', weaponValidator, createWeaponPost);
+router.get('/:weaponCategory/:weaponName', getWeapon);
+router.get('/:weaponCategory/:weaponName/delete', deleteWeaponGet);
+router.post('/:weaponCategory/:weaponName/delete', deleteWeaponPost);
+router.get('/:weaponCategory/:weaponName/update', updateWeaponGet);
 router.post(
   '/:weaponType/:weaponName/update',
   weaponValidator,
