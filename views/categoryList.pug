@@ -1,6 +1,6 @@
 extends layout.pug 
 block content 
-  h2.font-display.font-bold.text-5xl weapon type list
+  h2.font-display.font-bold.text-5xl !{category} category list
   if categoryList.length
     ul.w-full.m-4.px-8.grid.grid-cols-1.sm_grid-cols-3.justify-center.content-center.justify-items-center
       for category in categoryList 

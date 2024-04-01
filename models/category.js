@@ -27,4 +27,4 @@ categoryTypeSchema.virtual('url').get(function () {
   return `/inventory/${this.category}/${this.name}`;
 });
 
-module.exports = mongoose.model('CategoryType', categoryTypeSchema);
+module.exports = mongoose.model('Category', categoryTypeSchema);

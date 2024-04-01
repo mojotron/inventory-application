@@ -6,6 +6,7 @@ const Category = require('../models/category');
 const Weapon = require('../models/weapon');
 // constants
 const itemQualityOptions = require('../constants/itemQuality');
+const weaponSlotOptions = require('../constants/weaponSlot');
 // errors
 const { BadRequest } = require('../errors/index');
 
@@ -21,28 +22,45 @@ const weaponCategories = asyncHandler(async (req, res) => {
   });
 });
 // CREATE WEAPON CATEGORY
-const createWeaponCategoryGet = (req, res) => {
+const createWeaponCategoryGet = asyncHandler(async (req, res) => {
+  const allWeaponCategories = await Category.find({
+    category: 'weapon',
+  })
+    .select('name')
+    .exec();
+
+  const existingWepCategories = allWeaponCategories.map((item) => item.name);
+
+  const newWeaponOptions = weaponSlotOptions.filter(
+    (option) => !existingWepCategories.includes(option),
+  );
+
   res.status(StatusCodes.OK).render('categoryForm', {
     categoryName: 'create new weapon category',
-    inputPlaceholder: 'sword, axe, eg.',
-    inputValue: '',
+    categoryOptions: newWeaponOptions,
     errors: [],
   });
-};
+});
 
 const createWeaponCategoryPost = asyncHandler(async (req, res) => {
   const { categoryName } = req.body;
-  const errors = validationResult(req);
+
   const weaponExist = await Category.findOne({ name: categoryName });
 
-  if (!errors.isEmpty() || weaponExist) {
+  if (weaponExist) {
+    // in case multiple users creating same option
+    const allWeaponCategories = await Category.find({
+      category: 'weapon',
+    }).select('name');
+
+    const newWeaponOptions = weaponSlotOptions.filter(
+      (option) => !allWeaponCategories.includes(option),
+    );
+
     res.render('categoryForm', {
       categoryName: 'create new weapon category',
-      inputPlaceholder: 'sword, axe, eg.',
-      inputValue: categoryName,
-      errors: weaponExist
-        ? [{ msg: `${categoryName} already exists!` }]
-        : errors.errors,
+      categoryOptions: newWeaponOptions,
+      errors: [{ msg: `${categoryName} already created` }],
     });
     return;
   }

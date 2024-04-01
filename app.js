@@ -2,7 +2,10 @@ require('dotenv').config();
 const path = require('node:path');
 const express = require('express');
 const connectDB = require('./db/connect');
+// routers
 const weaponRouter = require('./routes/weaponRoutes.js');
+const armorRouter = require('./routes/armorRoutes.js');
+// constants
 const categories = require('./constants/categories.js');
 
 const notFoundMiddleware = require('./middleware/notFound.js');
@@ -23,6 +26,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/inventory/weapon', weaponRouter);
+app.use('/inventory/armor', armorRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

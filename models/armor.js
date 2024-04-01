@@ -1,29 +1,29 @@
 const mongoose = require('mongoose');
 const itemQuality = require('../constants/itemQuality');
 
-const weaponSchema = new mongoose.Schema({
+const armorSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'weapon name is required'],
-    minLength: 3,
-    maxLength: 25,
+    required: [true, 'armor name is required'],
     unique: true,
+    minlength: 3,
+    maxLength: 25,
     lowercase: true,
   },
   type: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category',
-    required: [true, 'weapon type is required'],
+    required: [true, 'armor type is required'],
   },
-  attackPower: {
+  armorPower: {
     type: Number,
     min: 1,
-    max: 100,
+    max: 25,
     default: 5,
   },
   description: {
     type: String,
-    minLength: 3,
+    minlength: 3,
     maxLength: 150,
     required: true,
   },
@@ -41,4 +41,8 @@ const weaponSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('Weapon', weaponSchema);
+armorSchema.virtual('url').get(function () {
+  return `/inventory/armor/${this.name}`;
+});
+
+module.exports = mongoose.model('Armor', armorSchema);

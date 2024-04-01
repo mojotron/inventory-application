@@ -3,7 +3,10 @@ block content
   h2.font-display.font-bold.text-5xl !{categoryName}
 
   form(action="" method="POST").my-4.flex.flex-col.items-center.gap-4
-    input(type="text" placeholder= inputPlaceholder name="categoryName" required value= inputValue).text-gold-500.font-bold.w-full.px-4.py-2.bg-gray-800.rounded-md.border.border-poor.tracking-wider.outline-none.focus_ring.focus_ring-gold-500
+    select(name="categoryName").text-gold-500.font-bold.w-full.px-4.py-2.bg-gray-800.rounded-md.border.border-poor.tracking-wider.outline-none.focus_ring.focus_ring-gold-500
+      each item in categoryOptions
+        option(value= item) #{item} 
+    
     
     if errors.length 
       ul.space-y-2  
