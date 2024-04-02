@@ -25,9 +25,7 @@ const weaponCategories = asyncHandler(async (req, res) => {
 const createWeaponCategoryGet = asyncHandler(async (req, res) => {
   const allWeaponCategories = await Category.find({
     category: 'weapon',
-  })
-    .select('name')
-    .exec();
+  }).select('name');
 
   const existingWepCategories = allWeaponCategories.map((item) => item.name);
 
@@ -86,7 +84,8 @@ const allWeapons = asyncHandler(async (req, res) => {
   const allWeapons = await Weapon.find({ type: categoryDoc._id });
 
   res.render('categoryItems', {
-    category: categoryDoc.name,
+    category: 'weapon',
+    subCategory: categoryDoc.name,
     categoryItems: allWeapons,
   });
 });
@@ -118,7 +117,7 @@ const createWeaponGet = (req, res) => {
     buttonDisplay: `Create ${weaponCategory}`,
   });
 };
-// CREATE WEAPON
+
 const createWeaponPost = asyncHandler(async (req, res) => {
   const { weaponCategory } = req.params;
   const { name, attackPower, description, itemQuality } = req.body;
@@ -126,7 +125,7 @@ const createWeaponPost = asyncHandler(async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     res.render('weaponCreateForm', {
-      weaponCategory,
+      category: weaponCategory,
       itemQualityOptions,
       errors: errors.errors,
       formValues: { name, attackPower, description, itemQuality },

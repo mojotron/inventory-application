@@ -1,13 +1,13 @@
 extends layout 
 block content 
-  h2.font-display.font-bold.text-5xl !{category} list
+  h2.font-display.font-bold.text-5xl !{subCategory} list
 
   if categoryItems.length
     ul.w-full.m-4.px-8.grid.grid-cols-1.sm_grid-cols-3.justify-center.content-center.justify-items-center
       for item in categoryItems
         li 
-          a(href=`/inventory/weapon/${category}/${item.name}` class=`text-${item.itemQuality}`).cursor-pointer.hover_underline.hover_text-gold-500.text-lg !{item.name}
+          a(href=`/inventory/${category}/${subCategory}/${item.name}` class=`text-${item.itemQuality}`).cursor-pointer.hover_underline.hover_text-gold-500.text-lg !{item.name}
   else 
     p no !{category} created
 
-  a(href="/inventory/weapon/"+category+"/create").my-4.border.border-gray-200.rounded-md.px-4.py-1.font-display.font-bold.text-2xl.tracking-wider.hover_bg-gold-500.hover_text-gray-900.hover_border-gray-900.transition-all.duration-150 create new !{category}
+  a(href=`/inventory/${category}/${subCategory}/create`).my-4.border.border-gray-200.rounded-md.px-4.py-1.font-display.font-bold.text-2xl.tracking-wider.hover_bg-gold-500.hover_text-gray-900.hover_border-gray-900.transition-all.duration-150 create new !{subCategory}
