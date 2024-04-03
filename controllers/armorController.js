@@ -198,58 +198,58 @@ const updateArmorGet = asyncHandler(async (req, res) => {
     );
   }
 
-  res.render('weaponCreateForm', {
-    weaponCategory: weaponCategory,
+  res.render('armorCreateForm', {
+    weaponCategory: armorCategory,
     itemQualityOptions,
     errors: [],
     formValues: {
-      name: weaponDoc.name,
-      attackPower: weaponDoc.attackPower,
-      description: weaponDoc.description,
-      itemQuality: weaponDoc.itemQuality,
+      name: armorDoc.name,
+      armorPower: armorDoc.armorPower,
+      description: armorDoc.description,
+      itemQuality: armorDoc.itemQuality,
     },
-    buttonDisplay: `update ${weaponName}`,
+    buttonDisplay: `update ${armorName}`,
   });
 });
 
 const updateArmorPost = asyncHandler(async (req, res) => {
-  const { weaponCategory, weaponName } = req.params;
-  const { name, attackPower, description, itemQuality } = req.body;
+  const { armorCategory, armorName } = req.params;
+  const { name, armorPower, description, itemQuality } = req.body;
 
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    res.render('weaponCreateForm', {
-      weaponCategory,
+    res.render('armorCreateForm', {
+      category: armorCategory,
       itemQualityOptions,
       errors: errors.errors,
-      formValues: { name, attackPower, description, itemQuality },
-      buttonDisplay: `Create ${weaponCategory}`,
+      formValues: { name, armorPower, description, itemQuality },
+      buttonDisplay: `Create ${armorCategory}`,
     });
     return;
   }
 
-  const weaponDoc = await Weapon.findOne({ name: weaponName });
+  const armorDoc = await Armor.findOne({ name: armorName });
 
-  if (weaponDoc === null) {
+  if (armorDoc === null) {
     throw new BadRequest(
-      `Could not ${weaponCategory} item with name ${weaponName}`,
+      `Could not ${armorCategory} item with name ${armorName}`,
     );
   }
 
-  const updatedWeapon = await Weapon.findOneAndUpdate(
-    { name: weaponName },
+  const updatedArmor = await Armor.findOneAndUpdate(
+    { name: armorName },
     {
-      _id: weaponDoc._id,
+      _id: armorDoc._id,
       name: name,
-      type: weaponDoc.type,
-      attackPower: Number(attackPower),
+      type: armorDoc.type,
+      attackPower: Number(armorPower),
       description,
       itemQuality,
     },
   );
-  if (updatedWeapon === null) throw new Error(); // error handler middleware will display default error
-  res.redirect(`/inventory/weapon/${weaponCategory}/${updatedWeapon.name}`);
+  if (updatedArmor === null) throw new Error(); // error handler middleware will display default error
+  res.redirect(`/inventory/armor/${armorCategory}/${updatedArmor.name}`);
 });
 
 module.exports = {

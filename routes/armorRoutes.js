@@ -29,6 +29,10 @@ router.get('/:armorCategory/:armorName', getArmor);
 router.get('/:armorCategory/:armorName/delete', deleteArmorGet);
 router.post('/:armorCategory/:armorName/delete', deleteArmorPost);
 router.get('/:armorCategory/:armorName/update', updateArmorGet);
-router.post('/:armorType/:armorName/update', armorValidator, updateArmorPost);
+router.post(
+  '/:armorCategory/:armorName/update',
+  armorValidator,
+  updateArmorPost,
+);
 
 module.exports = router;

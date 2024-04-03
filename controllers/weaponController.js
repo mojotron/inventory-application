@@ -218,7 +218,7 @@ const updateWeaponPost = asyncHandler(async (req, res) => {
 
   if (!errors.isEmpty()) {
     res.render('weaponCreateForm', {
-      category,
+      category: weaponCategory,
       itemQualityOptions,
       errors: errors.errors,
       formValues: { name, attackPower, description, itemQuality },

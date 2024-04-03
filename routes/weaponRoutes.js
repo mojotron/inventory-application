@@ -29,7 +29,7 @@ router.get('/:weaponCategory/:weaponName/delete', deleteWeaponGet);
 router.post('/:weaponCategory/:weaponName/delete', deleteWeaponPost);
 router.get('/:weaponCategory/:weaponName/update', updateWeaponGet);
 router.post(
-  '/:weaponType/:weaponName/update',
+  '/:weaponCategory/:weaponName/update',
   weaponValidator,
   updateWeaponPost,
 );
