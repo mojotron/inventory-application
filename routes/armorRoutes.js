@@ -7,6 +7,10 @@ const {
   createArmorGet,
   createArmorPost,
   getArmor,
+  deleteArmorGet,
+  deleteArmorPost,
+  updateArmorGet,
+  updateArmorPost,
 } = require('../controllers/armorController');
 
 const categoryValidator = require('../validators/category');
@@ -22,8 +26,9 @@ router.get('/:armorCategory', allArmor);
 router.get('/:armorCategory/create', createArmorGet);
 router.post('/:armorCategory/create', armorValidator, createArmorPost);
 router.get('/:armorCategory/:armorName', getArmor);
-// router.get('/:weaponCategory/:weaponName/delete', deleteWeaponGet);
-// router.post('/:weaponCategory/:weaponName/delete', deleteWeaponPost);
-// router.get('/:weaponCategory/:weaponName/update', updateWeaponGet);
+router.get('/:armorCategory/:armorName/delete', deleteArmorGet);
+router.post('/:armorCategory/:armorName/delete', deleteArmorPost);
+router.get('/:armorCategory/:armorName/update', updateArmorGet);
+router.post('/:armorType/:armorName/update', armorValidator, updateArmorPost);
 
 module.exports = router;

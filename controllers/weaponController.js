@@ -105,7 +105,7 @@ const createWeaponGet = (req, res) => {
   const { weaponCategory } = req.params;
 
   res.render('weaponCreateForm', {
-    weaponCategory: weaponCategory,
+    category: weaponCategory,
     itemQualityOptions,
     errors: [],
     formValues: {
@@ -197,7 +197,7 @@ const updateWeaponGet = asyncHandler(async (req, res) => {
   }
 
   res.render('weaponCreateForm', {
-    weaponCategory: weaponCategory,
+    category: weaponCategory,
     itemQualityOptions,
     errors: [],
     formValues: {
@@ -218,7 +218,7 @@ const updateWeaponPost = asyncHandler(async (req, res) => {
 
   if (!errors.isEmpty()) {
     res.render('weaponCreateForm', {
-      weaponCategory,
+      category,
       itemQualityOptions,
       errors: errors.errors,
       formValues: { name, attackPower, description, itemQuality },
