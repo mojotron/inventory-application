@@ -27,6 +27,10 @@ const itemRaritySchema = new mongoose.Schema({
     required: [true, 'ability modifier is required'],
     unique: true,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
 });
 
 module.exports = mongoose.model('ItemRarity', itemRaritySchema);

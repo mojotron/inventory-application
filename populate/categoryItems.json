@@ -1,0 +1,32 @@
+[
+  { "name": "club", "category": "weapon" },
+  { "name": "dagger", "category": "weapon" },
+  { "name": "axe", "category": "weapon" },
+  { "name": "hammer", "category": "weapon" },
+  { "name": "mace", "category": "weapon" },
+  { "name": "quarterstaff", "category": "weapon" },
+  { "name": "spear", "category": "weapon" },
+  { "name": "sling", "category": "weapon" },
+  { "name": "bow", "category": "weapon" },
+  { "name": "crossbow", "category": "weapon" },
+  { "name": "flail", "category": "weapon" },
+  { "name": "sword", "category": "weapon" },
+
+  { "name": "head", "category": "armor" },
+  { "name": "shoulders", "category": "armor" },
+  { "name": "chest", "category": "armor" },
+  { "name": "wrist", "category": "armor" },
+  { "name": "hands", "category": "armor" },
+  { "name": "waist", "category": "armor" },
+  { "name": "legs", "category": "armor" },
+  { "name": "feet", "category": "armor" },
+  { "name": "back", "category": "armor" },
+
+  { "name": "food", "category": "consumable" },
+  { "name": "drink", "category": "consumable" },
+  { "name": "elixir", "category": "consumable" },
+  { "name": "flask", "category": "consumable" },
+  { "name": "bandage", "category": "consumable" },
+  { "name": "scroll", "category": "consumable" },
+  { "name": "rune", "category": "consumable" }
+]

@@ -1,16 +1,47 @@
 require('dotenv').config();
 const connectDB = require('../db/connect');
-
+// models
 const ItemRarity = require('../models/itemRarity');
-const itemRarityData = require('./itemRarity.json');
+const Category = require('../models/category');
+const CategoryItem = require('../models/categoryItem');
+const Ability = require('../models/ability');
+// data
+const { CATEGORIES, ABILITIES, ITEM_RARITY } = require('./data');
 
 const populate = async () => {
   try {
     await connectDB(process.env.MONGO_URI);
     console.log('> connected to database');
     // create item rarity options
-    await ItemRarity.deleteMany().exec();
-    await ItemRarity.create(itemRarityData);
+    await ItemRarity.deleteMany();
+    await ItemRarity.create(ITEM_RARITY);
+    console.log('> item rarity created');
+    // create categories
+    await Category.deleteMany();
+    const categories = await Category.create(
+      Object.keys(CATEGORIES).map((category) => ({ name: category })),
+    );
+    console.log('> categories created');
+    // create category items
+    await CategoryItem.deleteMany();
+
+    const categoryItems = categories.reduce((result, category) => {
+      const items = CATEGORIES[category.name].map((item) => {
+        return { name: item, category: category._id };
+      });
+
+      return [...result, ...items];
+    }, []);
+
+    await CategoryItem.create(categoryItems);
+    console.log('> category items created');
+
+    // create abilities
+    await Ability.deleteMany();
+    await Ability.create(ABILITIES.map((ability) => ({ name: ability })));
+    console.log('> abilities created');
+
+    // exit
     console.log('> success');
     process.exit();
   } catch (error) {
