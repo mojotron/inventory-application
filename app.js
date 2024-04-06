@@ -3,10 +3,8 @@ const path = require('node:path');
 const express = require('express');
 const connectDB = require('./db/connect');
 // routers
-const weaponRouter = require('./routes/weaponRoutes.js');
-const armorRouter = require('./routes/armorRoutes.js');
+const inventoryRouter = require('./routes/inventoryRoutes.js');
 // constants
-const categories = require('./constants/categories.js');
 
 const notFoundMiddleware = require('./middleware/notFound.js');
 const errorHandlerMiddleware = require('./middleware/errorHandler.js');
@@ -20,13 +18,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {
-  console.log(categories);
-  // res.render('layout', { categories }); not working in extends layout -.-
   res.render('layout');
 });
 
-app.use('/inventory/weapon', weaponRouter);
-app.use('/inventory/armor', armorRouter);
+app.use('/inventory', inventoryRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

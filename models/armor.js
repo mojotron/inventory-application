@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const itemQuality = require('../constants/itemQuality');
 
 const armorSchema = new mongoose.Schema({
   name: {
@@ -30,7 +29,7 @@ const armorSchema = new mongoose.Schema({
   itemQuality: {
     type: String,
     enum: {
-      values: [...itemQuality],
+      values: ['head'],
       message: '{VALUE} not supported',
       lowercase: true,
     },
