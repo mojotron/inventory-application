@@ -3,6 +3,8 @@ const asyncHandler = require('express-async-handler');
 const Category = require('../models/category');
 const CategoryItem = require('../models/categoryItem');
 
+const { createWeapon } = require('./weaponController');
+
 const getCategories = asyncHandler(async (req, res) => {
   const allCategory = await Category.find({}).exec();
   const categoryNames = allCategory.map((category) => category.name);
@@ -28,8 +30,39 @@ const getCategoryItems = asyncHandler(async (req, res) => {
   res.json({ categoryItems: allCategoryItemNames });
 });
 
-const getAllItems = asyncHandler(async () => {});
+const getAllItems = asyncHandler(async (req, res) => {
+  const { categoryName, categoryItemName } = req.params;
+  res.send(`get all items: [${categoryName}, ${categoryItemName}]`);
+});
+// CREATE Item instance
+const createItem = asyncHandler(async (req, res) => {
+  const { categoryName } = req.params;
 
-const createWeapon = asyncHandler(async () => {});
+  switch (categoryName) {
+    case 'weapon':
+      return createWeapon(req, res);
+    default:
+      return res.send(`${categoryName} category is not supported`);
+  }
+});
 
-module.exports = { getCategories, getCategoryItems };
+const updateItem = asyncHandler(async (req, res) => {
+  const { categoryName, categoryItemName, itemName } = req.params;
+  res.send(`update item: [${categoryName}, ${categoryItemName}], ${itemName}`);
+});
+
+const deleteItem = asyncHandler(async (req, res) => {
+  const { categoryName, categoryItemName, itemName } = req.params;
+  res.send(`get all item: [${categoryName}, ${categoryItemName}, ${itemName}]`);
+});
+
+module.exports = {
+  //
+  getCategories,
+  getCategoryItems,
+  getAllItems,
+  //weapons
+  createItem,
+  updateItem,
+  deleteItem,
+};

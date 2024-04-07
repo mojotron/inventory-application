@@ -27,12 +27,12 @@ const weaponSchema = new mongoose.Schema({
     required: true,
   },
   itemQuality: {
-    type: String,
-    enum: {
-      values: ['sword'],
-      message: '{VALUE} not supported',
-      lowercase: true,
-    },
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'ItemRarity',
+  },
+  abilities: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Ability',
   },
   createdAt: {
     type: Date,
