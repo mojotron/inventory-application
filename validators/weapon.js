@@ -14,7 +14,7 @@ const validators = [
     .withMessage('name must be between 3 and 25 characters')
     .escape(),
 
-  body('attackPower').trim().notEmpty().isFloat({ min: 1, max: 100 }).escape(),
+  body('attackPower').trim().notEmpty().isFloat({ min: 1, max: 20 }).escape(),
 
   body('description')
     .trim()

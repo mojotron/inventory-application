@@ -1,10 +1,25 @@
-const createWeapon = (req, res) => {
+const { body } = require('express-validator');
+const asyncHandler = require('express-async-handler');
+
+const createWeaponGet = asyncHandler(async (req, res) => {
   const { categoryName, categoryItemName } = req.params;
-  // validate inputs
-  // create item
-  // return data or render
+  // use to render options
+  const { rarity, ability } = req;
 
-  res.send('weapon create x');
-};
+  res.render('createItemForm', {
+    categoryName,
+    categoryItemName,
+    rarity,
+    ability,
+    fromInputs: {
+      name: '',
+      description: '',
+    },
+  });
+});
 
-module.exports = { createWeapon };
+const createWeaponPost = asyncHandler(async (req, res) => {
+  res.send('create weapon post');
+});
+
+module.exports = { createWeaponGet, createWeaponPost };

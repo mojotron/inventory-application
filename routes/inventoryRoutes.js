@@ -3,7 +3,8 @@ const {
   getCategories,
   getCategoryItems,
   getAllItems,
-  createItem,
+  createItemGet,
+  createItemPost,
   updateItem,
   deleteItem,
 } = require('../controllers/inventoryController');
@@ -14,7 +15,10 @@ router.get('/', getCategories);
 router.get('/:categoryName', getCategoryItems);
 router.get('/:categoryName/:categoryItemName', getAllItems);
 // TODO get single item
-router.post('/:categoryName/:categoryItemName', createItem);
+// createItem
+router.get('/:categoryName/:categoryItemName/create', createItemGet);
+router.post('/:categoryName/:categoryItemName/create', createItemPost);
+//
 router.patch('/:categoryName/:categoryItemName/:itemName', updateItem);
 router.delete('/:categoryName/:categoryItemName/:itemName', deleteItem);
 

@@ -17,7 +17,7 @@ const weaponSchema = new mongoose.Schema({
   attackPower: {
     type: Number,
     min: 1,
-    max: 100,
+    max: 20,
     default: 5,
   },
   description: {
