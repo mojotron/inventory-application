@@ -1,3 +1,39 @@
-extends layout 
-block content 
-  h1 hello
+extends layout
+block content
+
+  
+  h2.font-display.text-5xl create new #{categoryItemName}
+  form(action="" method="POST").flex.flex-col.gap-2
+    div
+      label(for="item-name" id="item-name").font-display.text-3xl  item name
+      input(type="text" id="item-name" name="item-name").text-gold-500.font-bold.w-full.px-4.py-2.bg-gray-800.rounded-md.border.border-poor.tracking-wider.outline-none.focus_ring.focus_ring-gold-500
+
+    div
+      label(for="item-description" id="item-description").font-display.text-3xl  item description 
+      textarea(type="text" id="item-description" name="item-description").text-gold-500.font-bold.w-full.px-4.py-2.bg-gray-800.rounded-md.border.border-poor.tracking-wider.outline-none.focus_ring.focus_ring-gold-500
+
+    div
+      label(for="" id="").font-display.text-3xl  item power score
+      input(type="number" id="" name="" min="" max="").text-gold-500.font-bold.w-full.px-4.py-2.bg-gray-800.rounded-md.border.border-poor.tracking-wider.outline-none.focus_ring.focus_ring-gold-500
+
+    div 
+      label(for="item-rarity").font-display.text-3xl set item rarity
+      select(type="text" id="item-rarity" name="item-rarity").text-gold-500.font-bold.w-full.px-4.py-2.bg-gray-800.rounded-md.border.border-poor.tracking-wider.outline-none.focus_ring.focus_ring-gold-500
+        each rarity in itemRarity   
+          option(value=`${rarity}`) #{rarity.name}
+
+    div
+      h3.font-display.text-3xl pick item bonus abilities
+      p(id="ability-counter") 0
+      p(id="ability-counter-max") 0
+      div(id="ability-list").grid.grid-cols-3.gap-x-2.gap-y-1
+        each ability in abilities
+          div.space-x-1
+            input(type="checkbox" name=`ability-${ability}` id=`ability-${ability}`)
+            label(for=`ability-${ability}`) #{ability}
+    
+    button(type="submit").my-4.border.border-gray-200.rounded-md.px-4.py-1.font-display.font-bold.text-2xl.tracking-wider.hover_bg-gold-500.hover_text-gray-900.hover_border-gray-900.transition-all.duration-150 create #{categoryName} 
+
+  block scripts 
+    script(src="/scripts/createForm.js")
+    

@@ -9,11 +9,12 @@ const createWeaponGet = asyncHandler(async (req, res) => {
   res.render('createItemForm', {
     categoryName,
     categoryItemName,
-    rarity,
-    ability,
+    itemRarity: rarity,
+    abilities: ability,
     fromInputs: {
       name: '',
       description: '',
+      rarity: rarity[0].name,
     },
   });
 });
