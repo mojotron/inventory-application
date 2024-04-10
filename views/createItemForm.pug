@@ -20,12 +20,14 @@ block content
       label(for="item-rarity").font-display.text-3xl set item rarity
       select(type="text" id="item-rarity" name="item-rarity").text-gold-500.font-bold.w-full.px-4.py-2.bg-gray-800.rounded-md.border.border-poor.tracking-wider.outline-none.focus_ring.focus_ring-gold-500
         each rarity in itemRarity   
-          option(value=`${rarity}`) #{rarity.name}
+          option(value=`${rarity.name}` data-ability-count= rarity.abilityCount selected=(rarity.name === fromInputs.rarity)) #{rarity.name}
 
     div
       h3.font-display.text-3xl pick item bonus abilities
-      p(id="ability-counter") 0
-      p(id="ability-counter-max") 0
+      p selected abilities 
+        span(id="ability-counter") 0
+        span /
+        span(id="ability-counter-max") 0
       div(id="ability-list").grid.grid-cols-3.gap-x-2.gap-y-1
         each ability in abilities
           div.space-x-1
@@ -36,4 +38,3 @@ block content
 
   block scripts 
     script(src="/scripts/createForm.js")
-    
