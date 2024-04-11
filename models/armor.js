@@ -17,7 +17,7 @@ const armorSchema = new mongoose.Schema({
   armorPower: {
     type: Number,
     min: 1,
-    max: 25,
+    max: 20,
     default: 5,
   },
   description: {

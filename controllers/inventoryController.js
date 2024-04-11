@@ -5,7 +5,7 @@ const CategoryItem = require('../models/categoryItem');
 const ItemRarity = require('../models/itemRarity');
 const Ability = require('../models/ability');
 
-const { createWeaponGet } = require('./weaponController');
+const { createWeaponGet, createWeaponPost } = require('./weaponController');
 
 const getCategories = asyncHandler(async (req, res) => {
   const allCategory = await Category.find({}).exec();
@@ -38,19 +38,6 @@ const getAllItems = asyncHandler(async (req, res) => {
 });
 // CREATE Item instance TODO TODO TODO
 const createItemGet = asyncHandler(async (req, res) => {
-  const [rarityOptions, abilityOptions] = await Promise.all([
-    ItemRarity.find({}).exec(),
-    Ability.find({}).exec(),
-  ]);
-
-  req.rarity = rarityOptions
-    .map((item) => ({
-      name: item.name,
-      abilityCount: item.bonusAbilities,
-    }))
-    .sort((a, b) => a.abilityCount - b.abilityCount);
-  req.ability = abilityOptions.map((item) => item.name);
-
   const { categoryName } = req.params;
 
   switch (categoryName) {
@@ -62,7 +49,14 @@ const createItemGet = asyncHandler(async (req, res) => {
 });
 
 const createItemPost = asyncHandler(async (req, res) => {
-  res.send('temp');
+  const { categoryName } = req.params;
+
+  switch (categoryName) {
+    case 'weapon':
+      return createWeaponPost(req, res);
+    default:
+      return res.send(`${categoryName} category is not supported`);
+  }
 });
 
 const updateItem = asyncHandler(async (req, res) => {

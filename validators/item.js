@@ -1,7 +1,7 @@
 const { body } = require('express-validator');
 
 const validators = [
-  body('name')
+  body('itemName')
     .trim()
     .notEmpty()
     .withMessage('name field is required')
@@ -14,9 +14,9 @@ const validators = [
     .withMessage('name must be between 3 and 25 characters')
     .escape(),
 
-  body('armorPower').trim().notEmpty().isFloat({ min: 1, max: 100 }).escape(),
+  body('itemPower').trim().notEmpty().isFloat({ min: 1, max: 20 }).escape(),
 
-  body('description')
+  body('itemDescription')
     .trim()
     .notEmpty()
     .withMessage('description field is required')

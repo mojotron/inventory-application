@@ -9,9 +9,14 @@ const weaponSchema = new mongoose.Schema({
     unique: true,
     lowercase: true,
   },
-  type: {
+  category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category',
+    required: [true, 'category is required'],
+  },
+  categoryItem: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'CategoryItem',
     required: [true, 'weapon type is required'],
   },
   attackPower: {
