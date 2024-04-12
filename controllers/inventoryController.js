@@ -29,7 +29,7 @@ const getCategoryItems = asyncHandler(async (req, res) => {
     (categoryName) => categoryName.name,
   );
 
-  res.json({ categoryItems: allCategoryItemNames });
+  res.render('categoryItemList', { categoryItems: allCategoryItemNames });
 });
 
 const getAllItems = asyncHandler(async (req, res) => {

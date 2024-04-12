@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 const abilityContainer = document.getElementById('ability-list');
 const abilityCheckboxes = abilityContainer.querySelectorAll(
   "input[type='checkbox']",
@@ -12,16 +14,16 @@ let abilityCounterMax = 0;
 
 abilityCheckboxes.forEach((checkbox) => {
   checkbox.addEventListener('click', (e) => {
-    if (abilityCounter >= abilityCounterMax) {
-      e.target.checked = false;
-      return;
-    }
-
-    if (e.target.checked) {
+    if (e.currentTarget.checked === true) {
+      if (abilityCounter >= abilityCounterMax) {
+        e.currentTarget.checked = false;
+        return;
+      }
       abilityCounter += 1;
     } else {
       abilityCounter -= 1;
     }
+
     abilityCounterDOM.textContent = abilityCounter;
   });
 });
@@ -39,8 +41,14 @@ itemRarity.addEventListener('change', function () {
   abilityCounterDOM.textContent = abilityCounter.toString();
 });
 
-//select item rarity option
-const temp = itemRarity.options;
-for (let i = 0; i < temp.length; i++) {
-  if (temp[i].value === 'poor') temp[i].selected = true;
-}
+const init = () => {
+  //select item rarity option
+  const rarityOptions = itemRarity.options;
+  for (let i = 0; i < rarityOptions.length; i++) {
+    if (rarityOptions[i].value === 'poor') rarityOptions[i].selected = true;
+  }
+  // uncheck all checked abilities
+  abilityCheckboxes.forEach((checkbox) => (checkbox.checked = false));
+};
+
+init();

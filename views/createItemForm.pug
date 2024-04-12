@@ -6,21 +6,21 @@ block content
   form(action="" method="POST").flex.flex-col.gap-2
     div
       label(for="item-name").font-display.text-3xl  item name
-      input(type="text" id="item-name" name="itemName").text-gold-500.font-bold.w-full.px-4.py-2.bg-gray-800.rounded-md.border.border-poor.tracking-wider.outline-none.focus_ring.focus_ring-gold-500
+      input(type="text" id="item-name" name="itemName" value=`${formInputs.name}`).text-gold-500.font-bold.w-full.px-4.py-2.bg-gray-800.rounded-md.border.border-poor.tracking-wider.outline-none.focus_ring.focus_ring-gold-500
 
     div
       label(for="item-description" id="item-description").font-display.text-3xl  item description 
-      textarea(type="text" id="item-description" name="itemDescription").text-gold-500.font-bold.w-full.px-4.py-2.bg-gray-800.rounded-md.border.border-poor.tracking-wider.outline-none.focus_ring.focus_ring-gold-500
+      textarea(type="text" id="item-description" name="itemDescription").text-gold-500.font-bold.w-full.px-4.py-2.bg-gray-800.rounded-md.border.border-poor.tracking-wider.outline-none.focus_ring.focus_ring-gold-500 #{formInputs.description}
 
     div
       label(for="item-power").font-display.text-3xl  item power score
-      input(type="number" id="" name="itemPower" min="" max="").text-gold-500.font-bold.w-full.px-4.py-2.bg-gray-800.rounded-md.border.border-poor.tracking-wider.outline-none.focus_ring.focus_ring-gold-500
+      input(type="number" id="item-power" name="itemPower" min=`${formInputs.itemPower.min}` max=`${formInputs.itemPower.max}` value=`${ formInputs.itemPower.value}`).text-gold-500.font-bold.w-full.px-4.py-2.bg-gray-800.rounded-md.border.border-poor.tracking-wider.outline-none.focus_ring.focus_ring-gold-500
 
     div 
       label(for="item-rarity").font-display.text-3xl set item rarity
       select(type="text" id="item-rarity" name="itemRarity").text-gold-500.font-bold.w-full.px-4.py-2.bg-gray-800.rounded-md.border.border-poor.tracking-wider.outline-none.focus_ring.focus_ring-gold-500
         each rarity in itemRarity   
-          option(value=`${rarity.name}` data-ability-count= rarity.abilityCount selected=(rarity.name === fromInputs.rarity)) #{rarity.name}
+          option(value=`${rarity.name}` data-ability-count= rarity.abilityCount selected=(rarity.name === formInputs.rarity)) #{rarity.name}
 
     div
       h3.font-display.text-3xl pick item bonus abilities

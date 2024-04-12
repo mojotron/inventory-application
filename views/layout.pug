@@ -11,11 +11,14 @@ html(lang="en")
   body.p-3.sm_p-10.flex.flex-col.items-center.gap-6.bg-gray-900.font-sans.text-gray-200.min-w-screen.min-h-screen
     h1.font-display.uppercase.font-bold.text-6xl.text-center Item Inventory 
     
-    nav
-      ul.flex.items-center.gap-4
-        each category in ['weapon', 'armor', 'consumable']
-          li 
-            a(href=`/inventory/${category}`).hover_underline.hover_text-gold-500 !{category} 
+    if categories.length
+      nav
+        ul.flex.items-center.gap-4
+          each category in categories
+            li 
+              a(href=`/inventory/${category}`).hover_underline.hover_text-gold-500 !{category} 
+    else 
+      p.text-error Category list unavailable, please try again later!
 
     section.w-full.flex.flex-col.items-center.gap-4 
       block content

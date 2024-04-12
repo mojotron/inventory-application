@@ -15,10 +15,10 @@ const createWeaponGet = asyncHandler(async (req, res) => {
     categoryItemName,
     itemRarity: rarityOptions,
     abilities: abilityOptions,
-    fromInputs: {
-      name: '',
-      description: '',
-      // TODO item power value min max
+    formInputs: {
+      name: 'forsaken blade',
+      description: 'describe your weapon',
+      itemPower: { value: 1, min: 1, max: 20 },
       rarity: rarityOptions[0].name,
       abilities: [],
     },
@@ -61,10 +61,7 @@ const createWeaponPost = asyncHandler(async (req, res) => {
     );
   }
 
-  console.log(abilityDocs);
-
   const rarityDoc = await ItemRarity.findOne({ name: itemRarity });
-
   const categoryItemDoc = await CategoryItem.findOne({
     name: req.params.categoryItemName,
   });
@@ -72,12 +69,23 @@ const createWeaponPost = asyncHandler(async (req, res) => {
   if (rarityDoc === null || categoryItemDoc === null) {
     throw new Error();
   }
-  console.log(categoryItemDoc);
+
+  const { category: categoryId, _id: categoryItemId } = categoryItemDoc;
+
+  const itemExists = await Weapon.findOne({
+    itemName,
+    category: categoryId,
+    categoryItem: categoryItemId,
+  });
+
+  if (itemExists) {
+    throw new Error('weapon with name exists');
+  }
 
   const newWeapon = await Weapon.create({
     name: itemName,
-    category: categoryItemDoc.category,
-    categoryItem: categoryItemDoc._id,
+    category: categoryId,
+    categoryItem: categoryItemId,
     attackPower: itemPower,
     description: itemDescription,
     itemQuality: rarityDoc._id,
@@ -85,7 +93,7 @@ const createWeaponPost = asyncHandler(async (req, res) => {
   });
 
   if (newWeapon.length === 0) {
-    throw new Error();
+    throw new Error(); // throw internal server error
   }
 
   res.status(StatusCodes.CREATED).redirect('/');

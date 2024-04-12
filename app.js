@@ -3,6 +3,7 @@ const path = require('node:path');
 const express = require('express');
 const connectDB = require('./db/connect');
 // routers
+const mainRouter = require('./routes/mainRoutes.js');
 const inventoryRouter = require('./routes/inventoryRoutes.js');
 // constants
 
@@ -18,10 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.render('layout');
-});
-
+app.use('/', mainRouter);
 app.use('/inventory', inventoryRouter);
 
 app.use(notFoundMiddleware);
