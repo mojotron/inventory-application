@@ -19,14 +19,21 @@ const populate = async () => {
     // create categories
     await Category.deleteMany();
     const categories = await Category.create(
-      Object.keys(CATEGORIES).map((category) => ({ name: category })),
+      CATEGORIES.map((category) => ({
+        name: category.name,
+        maxPower: category.maxPower,
+      })),
     );
     console.log('> categories created');
     // create category items
     await CategoryItem.deleteMany();
 
     const categoryItems = categories.reduce((result, category) => {
-      const items = CATEGORIES[category.name].map((item) => {
+      const categoryItemList = CATEGORIES.find(
+        (item) => item.name === category.name,
+      );
+
+      const items = categoryItemList.categories.map((item) => {
         return { name: item, category: category._id };
       });
 

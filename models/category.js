@@ -9,6 +9,10 @@ const categoryTypeSchema = new mongoose.Schema({
     maxLength: 30,
     minLength: 3,
   },
+  maxPower: {
+    type: Number,
+    required: [true, 'power modifier is required'],
+  },
   createdAt: {
     type: Date,
     default: Date.now(),

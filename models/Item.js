@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const weaponSchema = new mongoose.Schema({
+const itemSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'weapon name is required'],
@@ -19,7 +19,7 @@ const weaponSchema = new mongoose.Schema({
     ref: 'CategoryItem',
     required: [true, 'weapon type is required'],
   },
-  attackPower: {
+  itemPower: {
     type: Number,
     min: 1,
     max: 20,
@@ -45,4 +45,4 @@ const weaponSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('Weapon', weaponSchema);
+module.exports = mongoose.model('Weapon', itemSchema);
