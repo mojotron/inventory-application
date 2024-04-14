@@ -1,6 +1,6 @@
 const express = require('express');
 const {
-  getCategories,
+  //getCategories,
   getCategoryItems,
   getAllItems,
   createItemGet,
@@ -9,25 +9,25 @@ const {
   deleteItem,
 } = require('../controllers/inventoryController');
 
-const getFormRarityAndAbilities = require('../middleware/getRarityAndAbilities');
+const getItemOptions = require('../middleware/getItemOptions');
 const itemValidator = require('../validators/item');
 
 const router = express.Router();
 
-router.get('/', getCategories);
 router.get('/:categoryName', getCategoryItems);
+//router.get('/:categoryName', getCategoryItems);
 router.get('/:categoryName/:categoryItemName', getAllItems);
 // TODO get single item
 // createItem
 router.get(
   '/:categoryName/:categoryItemName/create',
-  getFormRarityAndAbilities,
+  getItemOptions,
   createItemGet,
 );
 router.post(
   '/:categoryName/:categoryItemName/create',
   itemValidator,
-  getFormRarityAndAbilities,
+  getItemOptions,
   createItemPost,
 );
 //
