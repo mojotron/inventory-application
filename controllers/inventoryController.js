@@ -8,14 +8,8 @@ const CategoryItem = require('../models/categoryItem');
 const ItemRarity = require('../models/itemRarity');
 const Ability = require('../models/ability');
 
-// const getCategories = asyncHandler(async (req, res) => {
-//   const allCategoryItems = await CategoryItem.find({}).exec();
-//   const categoryNames = allCategory.map((category) => category.name);
-//   res.json({ categories: categoryNames });
-// });
-
 const getCategoryItems = asyncHandler(async (req, res) => {
-  // get all item per category
+  // get all item types in category
   const { categoryName } = req.params;
 
   const categoryDoc = await Category.findOne({
@@ -29,25 +23,27 @@ const getCategoryItems = asyncHandler(async (req, res) => {
   const allCategoryItems = await CategoryItem.find({
     category: categoryDoc._id,
   }).exec();
-  // TODO list number of items per group
-  // const allItemWithinCategory = await Promise.all(
-  //   allCategoryItems.map(
-  //     async (item) => await Item.find({ categoryItem: item._id }).exec(),
-  //   ),
-  // );
 
-  //console.log(allItemWithinCategory);
-
-  const allCategoryItemNames = allCategoryItems.map(
-    (categoryName) => categoryName.name,
+  // get categoryItem name and instance items count
+  const itemsPerCategory = await Promise.all(
+    allCategoryItems.map(async (item) => {
+      const items = await Item.find({ categoryItem: item._id })
+        .select('categoryItem')
+        .exec();
+      return { name: item.name, count: items.length };
+    }),
   );
 
-  res.render('categoryItemList', { categoryItems: allCategoryItemNames });
+  res.status(StatusCodes.OK).render('categoryItemList', {
+    categoryName,
+    categoryItems: itemsPerCategory,
+  });
 });
 
 const getAllItems = asyncHandler(async (req, res) => {
   const { categoryName, categoryItemName } = req.params;
-  res.send(`get all items: [${categoryName}, ${categoryItemName}]`);
+
+  res.render('itemsInCategory');
 });
 // CREATE Item instance
 const createItemGet = asyncHandler(async (req, res) => {

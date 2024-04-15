@@ -15,7 +15,6 @@ const itemValidator = require('../validators/item');
 const router = express.Router();
 
 router.get('/:categoryName', getCategoryItems);
-//router.get('/:categoryName', getCategoryItems);
 router.get('/:categoryName/:categoryItemName', getAllItems);
 // TODO get single item
 // createItem

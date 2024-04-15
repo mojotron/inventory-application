@@ -682,6 +682,9 @@ video {
 .pb-8{
   padding-bottom: 2rem;
 }
+.pt-16{
+  padding-top: 4rem;
+}
 .pt-4{
   padding-top: 1rem;
 }
@@ -718,6 +721,10 @@ video {
   font-size: 1.125rem;
   line-height: 1.75rem;
 }
+.text-sm{
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
 .font-bold{
   font-weight: 700;
 }
@@ -749,6 +756,10 @@ video {
 .text-gray-200{
   --tw-text-opacity: 1;
   color: rgb(228 228 231 / var(--tw-text-opacity));
+}
+.text-gray-500{
+  --tw-text-opacity: 1;
+  color: rgb(113 113 122 / var(--tw-text-opacity));
 }
 .text-gray-900{
   --tw-text-opacity: 1;

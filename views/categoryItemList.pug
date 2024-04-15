@@ -1,4 +1,9 @@
 extends layout 
 block content 
-  each item in categoryItems 
-    p #{item}
+
+  each item in categoryItems
+    ul 
+      li.flex.items-center
+        a(href=`/inventory/${categoryName}/${item.name}`).cursor-pointer.hover_underline.hover_text-gold-500.text-lg #{`${item.name}`}
+        if item.count > 0 
+          span.text-gray-500.ml-2.text-sm #{`(${item.count})`}
