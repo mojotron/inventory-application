@@ -1,3 +1,11 @@
 extends layout 
 block content 
-  h1 hello world
+
+  h2 list of #{categoryItem} items
+  
+  ul.space-y-4
+    each item in items
+      li(class=`border-${item.itemRarity} hover_bg-${item.itemRarity}`).border.rounded-md.p-4.group.hover_text-gray-900
+        a(href=`/inventory/${category}/${categoryItem}/${item.name}`)
+          h4(class=`text-${item.itemRarity}`).font-display.text-3xl.tracking-widest.group-hover_text-gray-900 #{item.name}
+          p #{item.description}

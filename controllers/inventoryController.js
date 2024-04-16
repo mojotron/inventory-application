@@ -42,8 +42,39 @@ const getCategoryItems = asyncHandler(async (req, res) => {
 
 const getAllItems = asyncHandler(async (req, res) => {
   const { categoryName, categoryItemName } = req.params;
+  const [categoryDoc, categoryItemDoc, rarityDocs] = await Promise.all([
+    Category.findOne({ name: categoryName }),
+    CategoryItem.findOne({ name: categoryItemName }),
+    ItemRarity.find({}),
+  ]);
 
-  res.render('itemsInCategory');
+  let items = await Item.find({
+    category: categoryDoc._id,
+    categoryItem: categoryItemDoc._id,
+  })
+    .select('name description itemQuality')
+    .exec();
+
+  // console.log(rarityDocs);
+
+  items = items.map((item) => {
+    const rarity = rarityDocs.find((doc) => doc._id.equals(item.itemQuality));
+
+    console.log(rarity);
+    return {
+      name: item.name,
+      description: item.description,
+      itemRarity: rarity.name,
+    };
+  });
+
+  console.log(items);
+
+  res.render('itemsInCategory', {
+    category: categoryName,
+    categoryItem: categoryItemName,
+    items,
+  });
 });
 // CREATE Item instance
 const createItemGet = asyncHandler(async (req, res) => {
