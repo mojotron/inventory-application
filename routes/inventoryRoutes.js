@@ -1,8 +1,8 @@
 const express = require('express');
 const {
-  //getCategories,
   getCategoryItems,
   getAllItems,
+  getItem,
   createItemGet,
   createItemPost,
   updateItem,
@@ -16,7 +16,6 @@ const router = express.Router();
 
 router.get('/:categoryName', getCategoryItems);
 router.get('/:categoryName/:categoryItemName', getAllItems);
-// TODO get single item
 // createItem
 router.get(
   '/:categoryName/:categoryItemName/create',
@@ -29,6 +28,8 @@ router.post(
   getItemOptions,
   createItemPost,
 );
+// get single item
+router.get('/:categoryName/:categoryItemName/:itemName', getItem);
 //
 router.patch('/:categoryName/:categoryItemName/:itemName', updateItem);
 router.delete('/:categoryName/:categoryItemName/:itemName', deleteItem);
