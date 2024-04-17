@@ -5,15 +5,23 @@ block content
       a(href=`/inventory/${category}/${categoryItem}/${item.name}/update`).hover_underline.hover_text-common.cursor-pointer edit 
       a(href=`/inventory/${category}/${categoryItem}/${item.name}/delete`).hover_underline.hover_text-error.cursor-pointer delete
 
-    header
+    header.space-y-4
       h2.font-display.font-bold.text-4xl.tracking-wider !{item.name}
       p.italic.text-poor.text-lg !{item.description}
+      if category === "weapon"
+        p.uppercase.font-bold.text-xl.flex.items-center.gap-x-4 attack power: 
+          span.bg-error.rounded-full.size-8.flex.items-center.justify-center.text-gray-900.font-bold !{Math.ceil(item.itemPower * powerModifier)}
 
-    div.flex.flex-col.gap-y-3
-      h3.font-display.font-bold.text-2xl.tracking-wider weapon stats
-      p.ml-2.flex.items-center.gap-x-4 attack power: 
-        span.bg-error.rounded-full.size-8.flex.items-center.justify-center.text-gray-900.font-bold !{item.itemPower}
-      p.ml-2.flex.items-center.gap-x-4 item rarity: 
-        span.font-bold.text-md.uppercase(class=`text-${itemQuality.name}`) !{itemQuality.name}
+    if abilities.length
+      div.flex.flex-col.gap-y-3
+        h3.font-display.font-bold.text-3xl.tracking-widest abilities bonus
+        ul.space-y-2
+          each ability in abilities 
+            li.ml-4.flex.gap-4.items-center.text-md 
+              span #{ability.name}
+              span.font-bold.tracking-wide #{`+${ability.power}`}
+      
+    p.flex.items-center.gap-x-4
+      span.font-bold.text-md.uppercase(class=`text-${itemQuality.name}`) #{itemQuality.name} #{categoryItem}
 
   a(href=`/inventory/${category}/${categoryItem}`).cursor-pointer.hover_underline.hover_text-gold-500.text-lg return to !{categoryItem} list

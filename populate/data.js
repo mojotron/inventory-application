@@ -48,20 +48,20 @@ const CATEGORIES = [
 ];
 
 const ABILITIES = [
-  'strength',
-  'agility',
-  'intellect',
-  'stamina',
-  'charisma',
-  'constitution',
-  'wisdom',
-  'speed',
-  'stealth',
-  'critical chance',
-  'critical damage',
-  'intimidation',
-  'deception',
-  'perception',
+  { name: 'strength', modifier: 1.25 },
+  { name: 'agility', modifier: 1.25 },
+  { name: 'intellect', modifier: 1.25 },
+  { name: 'stamina', modifier: 1.25 },
+  { name: 'charisma', modifier: 0.75 },
+  { name: 'constitution', modifier: 1 },
+  { name: 'wisdom', modifier: 0.75 },
+  { name: 'speed', modifier: 1.5 },
+  { name: 'stealth', modifier: 0.25 },
+  { name: 'critical chance', modifier: 0.5 },
+  { name: 'critical damage', modifier: 0.5 },
+  { name: 'intimidation', modifier: 0.75 },
+  { name: 'deception', modifier: 0.75 },
+  { name: 'perception', modifier: 0.75 },
 ];
 
 const ITEM_RARITY = [

@@ -45,7 +45,12 @@ const populate = async () => {
 
     // create abilities
     await Ability.deleteMany();
-    await Ability.create(ABILITIES.map((ability) => ({ name: ability })));
+    await Ability.create(
+      ABILITIES.map((ability) => ({
+        name: ability.name,
+        modifier: ability.modifier,
+      })),
+    );
     console.log('> abilities created');
 
     // exit

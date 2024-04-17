@@ -9,13 +9,11 @@ const abilitySchema = new mongoose.Schema({
     minLength: 3,
     maxLength: 25,
   },
-  lowModifier: {
+  modifier: {
     type: Number,
-    default: 0,
-  },
-  highModifier: {
-    type: Number,
-    default: 10,
+    default: 1,
+    min: 0,
+    max: 2,
   },
   createdAt: {
     type: Date,

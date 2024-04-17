@@ -25,7 +25,6 @@ const itemRaritySchema = new mongoose.Schema({
   abilityModifier: {
     type: Number,
     required: [true, 'ability modifier is required'],
-    unique: true,
   },
   createdAt: {
     type: Date,

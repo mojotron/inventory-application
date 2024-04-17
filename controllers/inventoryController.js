@@ -88,11 +88,23 @@ const getItem = asyncHandler(async (req, res) => {
     }),
   ]);
   // TODO MODIFIERS
+  const abilitiesWithModifier = abilityDocs.map((abilityDoc) => {
+    const { name, modifier } = abilityDoc;
+    return {
+      name,
+      power: item.itemPower * modifier * rarityDoc.abilityModifier,
+    };
+  });
+
+  console.log(abilitiesWithModifier);
+
   res.render('itemDetails', {
     category: categoryName,
     categoryItem: categoryItemName,
     item,
+    powerModifier: rarityDoc.powerModifier,
     itemQuality: rarityDoc,
+    abilities: abilitiesWithModifier,
   });
 });
 // CREATE Item instance
