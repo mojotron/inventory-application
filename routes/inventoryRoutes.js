@@ -5,8 +5,10 @@ const {
   getItem,
   createItemGet,
   createItemPost,
-  updateItem,
-  deleteItem,
+  updateItemGet,
+  updateItemPost,
+  deleteItemGet,
+  deleteItemPost,
 } = require('../controllers/inventoryController');
 
 const getItemOptions = require('../middleware/getItemOptions');
@@ -16,7 +18,6 @@ const router = express.Router();
 
 router.get('/:categoryName', getCategoryItems);
 router.get('/:categoryName/:categoryItemName', getAllItems);
-// createItem
 router.get(
   '/:categoryName/:categoryItemName/create',
   getItemOptions,
@@ -28,10 +29,24 @@ router.post(
   getItemOptions,
   createItemPost,
 );
-// get single item
 router.get('/:categoryName/:categoryItemName/:itemName', getItem);
-//
-router.patch('/:categoryName/:categoryItemName/:itemName', updateItem);
-router.delete('/:categoryName/:categoryItemName/:itemName', deleteItem);
+
+router.get(
+  '/:categoryName/:categoryItemName/:itemName/update',
+  getItemOptions,
+  updateItemGet,
+);
+router.post(
+  '/:categoryName/:categoryItemName/:itemName/update',
+  itemValidator,
+  getItemOptions,
+  updateItemPost,
+);
+
+router.get('/:categoryName/:categoryItemName/:itemName/delete', deleteItemGet);
+router.post(
+  '/:categoryName/:categoryItemName/:itemName/delete',
+  deleteItemPost,
+);
 
 module.exports = router;

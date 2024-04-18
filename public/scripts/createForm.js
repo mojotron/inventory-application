@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-
 const abilityContainer = document.getElementById('ability-list');
 const abilityCheckboxes = abilityContainer.querySelectorAll(
   "input[type='checkbox']",

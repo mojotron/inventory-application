@@ -9,7 +9,6 @@ const ItemRarity = require('../models/itemRarity');
 const Ability = require('../models/ability');
 
 const getCategoryItems = asyncHandler(async (req, res) => {
-  // get all item types in category
   const { categoryName } = req.params;
 
   const categoryDoc = await Category.findOne({
@@ -58,7 +57,6 @@ const getAllItems = asyncHandler(async (req, res) => {
   items = items.map((item) => {
     const rarity = rarityDocs.find((doc) => doc._id.equals(item.itemQuality));
 
-    console.log(rarity);
     return {
       name: item.name,
       description: item.description,
@@ -78,16 +76,13 @@ const getItem = asyncHandler(async (req, res) => {
 
   const item = await Item.findOne({ name: itemName });
 
-  console.log(item.abilities);
-
   const [rarityDoc, ...abilityDocs] = await Promise.all([
     ItemRarity.findById(item.itemQuality).exec(),
     ...item.abilities.map(async (ability) => {
-      console.log(ability);
       return await Ability.findById(ability).exec();
     }),
   ]);
-  // TODO MODIFIERS
+  // MODIFIERS calculation (simple one just for fun)
   const abilitiesWithModifier = abilityDocs.map((abilityDoc) => {
     const { name, modifier } = abilityDoc;
     return {
@@ -95,8 +90,6 @@ const getItem = asyncHandler(async (req, res) => {
       power: item.itemPower * modifier * rarityDoc.abilityModifier,
     };
   });
-
-  console.log(abilitiesWithModifier);
 
   res.render('itemDetails', {
     category: categoryName,
@@ -118,8 +111,8 @@ const createItemGet = asyncHandler(async (req, res) => {
     itemRarity: rarityOptions,
     abilities: abilityOptions,
     formInputs: {
-      name: 'forsaken blade',
-      description: 'describe your weapon',
+      name: '',
+      description: '',
       itemPower: { value: 1, min: 1, max: maxPower },
       rarity: rarityOptions[0].name,
       abilities: [],
@@ -136,7 +129,6 @@ const createItemPost = asyncHandler(async (req, res) => {
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.log(errors);
     res.render('createItemForm', {
       categoryName,
       categoryItemName,
@@ -175,7 +167,7 @@ const createItemPost = asyncHandler(async (req, res) => {
   const { category: categoryId, _id: categoryItemId } = categoryItemDoc;
 
   const itemExists = await Item.findOne({
-    itemName,
+    name: itemName,
     category: categoryId,
     categoryItem: categoryItemId,
   });
@@ -184,7 +176,7 @@ const createItemPost = asyncHandler(async (req, res) => {
     throw new Error('weapon with name exists');
   }
 
-  const newWeapon = await Item.create({
+  const newItem = await Item.create({
     name: itemName,
     category: categoryId,
     categoryItem: categoryItemId,
@@ -194,7 +186,7 @@ const createItemPost = asyncHandler(async (req, res) => {
     abilities: abilityDocs?.map((ability) => ability._id),
   });
 
-  if (newWeapon.length === 0) {
+  if (newItem.length === 0) {
     throw new Error(); // throw internal server error
   }
 
@@ -203,14 +195,141 @@ const createItemPost = asyncHandler(async (req, res) => {
     .redirect(`/inventory/${categoryName}/${categoryItemName}`);
 });
 
-const updateItem = asyncHandler(async (req, res) => {
+const updateItemGet = asyncHandler(async (req, res) => {
   const { categoryName, categoryItemName, itemName } = req.params;
-  res.send(`update item: [${categoryName}, ${categoryItemName}], ${itemName}`);
+  const { rarityOptions, abilityOptions, maxPower } = req;
+
+  const item = await Item.findOne({ name: itemName }).exec();
+
+  const [rarityDoc, ...abilityDocs] = await Promise.all([
+    ItemRarity.findById(item.itemQuality).exec(),
+    ...item.abilities.map(async (ability) => {
+      return await Ability.findById(ability).exec();
+    }),
+  ]);
+
+  res.render('createItemForm', {
+    categoryName,
+    categoryItemName,
+    itemRarity: rarityOptions,
+    abilities: abilityOptions,
+    formInputs: {
+      name: item.name,
+      description: item.description,
+      itemPower: { value: item.itemPower, min: 1, max: maxPower },
+      rarity: rarityDoc.name,
+      abilities: abilityDocs.map((ability) => ability.name),
+    },
+    errors: [],
+  });
 });
 
-const deleteItem = asyncHandler(async (req, res) => {
+const updateItemPost = asyncHandler(async (req, res) => {
+  const { categoryName, categoryItemName } = req.params;
+  const { rarityOptions, abilityOptions } = req;
+  const { itemName, itemDescription, itemPower, itemRarity, ...abilities } =
+    req.body;
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.render('createItemForm', {
+      categoryName,
+      categoryItemName,
+      itemRarity: rarityOptions,
+      abilities: abilityOptions,
+      fromInputs: {
+        name: itemName,
+        description: itemDescription,
+        rarity: itemRarity,
+      },
+      errors: errors.errors,
+    });
+    return;
+  }
+
+  const abilityNames = Object.keys(abilities).map(
+    (ability) => ability.split('-')[1],
+  );
+
+  let abilityDocs;
+  if (abilityNames.length > 0) {
+    abilityDocs = await Promise.all(
+      abilityNames.map((ability) => Ability.findOne({ name: ability })),
+    );
+  }
+
+  const rarityDoc = await ItemRarity.findOne({ name: itemRarity });
+  const categoryItemDoc = await CategoryItem.findOne({
+    name: req.params.categoryItemName,
+  });
+
+  if (rarityDoc === null || categoryItemDoc === null) {
+    throw new Error();
+  }
+
+  const { category: categoryId, _id: categoryItemId } = categoryItemDoc;
+
+  const itemExists = await Item.findOne({
+    name: itemName,
+    category: categoryId,
+    categoryItem: categoryItemId,
+  });
+
+  if (itemExists === null) {
+    throw new Error('weapon with name exists');
+  }
+
+  const updatedItem = await Item.findByIdAndUpdate(
+    itemExists._id,
+    {
+      name: itemName,
+      category: categoryId,
+      categoryItem: categoryItemId,
+      itemPower: itemPower,
+      description: itemDescription,
+      itemQuality: rarityDoc._id,
+      abilities: abilityDocs?.map((ability) => ability._id),
+    },
+    { new: true },
+  );
+
+  if (updatedItem === null) {
+    throw new Error(); // throw internal server error
+  }
+
+  res
+    .status(StatusCodes.OK)
+    .redirect(`/inventory/${categoryName}/${categoryItemName}`);
+});
+
+const deleteItemGet = asyncHandler(async (req, res) => {
   const { categoryName, categoryItemName, itemName } = req.params;
-  res.send(`get all item: [${categoryName}, ${categoryItemName}, ${itemName}]`);
+
+  res.render('deleteItem', {
+    category: categoryName,
+    categoryItem: categoryItemName,
+    item: itemName,
+  });
+});
+
+const deleteItemPost = asyncHandler(async (req, res) => {
+  const { categoryName, categoryItemName, itemName } = req.params;
+  const [categoryDoc, categoryNameDoc] = await Promise.all([
+    Category.findOne({ name: categoryName }).exec(),
+    CategoryItem.findOne({ name: categoryItemName }).exec(),
+  ]);
+  //
+  const item = await Item.findOneAndDelete({
+    name: itemName,
+    category: categoryDoc._id,
+    categoryItem: categoryNameDoc._id,
+  });
+
+  if (item === null) {
+    throw new Error();
+  }
+
+  res.redirect(`/inventory/${categoryName}`);
 });
 
 module.exports = {
@@ -219,6 +338,8 @@ module.exports = {
   getItem,
   createItemGet,
   createItemPost,
-  updateItem,
-  deleteItem,
+  updateItemGet,
+  updateItemPost,
+  deleteItemGet,
+  deleteItemPost,
 };
