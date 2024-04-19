@@ -3,7 +3,7 @@ block content
 
   h2.font-display.font-bold.text-5xl list of #{categoryItem} items
   
-  ul.grid.grid-cols-1.sm_grid-cols-2.md_grid-cols-3.gap-2
+  ul.grid.grid-cols-1.sm_grid-cols-2.md_grid-cols-3.gap-4.my-4
     each item in items
       li(class=`border-${item.itemRarity} hover_bg-${item.itemRarity}`).border.rounded-md.p-4.group.hover_text-gray-900
         a(href=`/inventory/${category}/${categoryItem}/${item.name}`)
@@ -11,3 +11,5 @@ block content
           p #{item.description}
   
   a(href=`/inventory/${category}/${categoryItem}/create`).my-4.border.border-gray-200.rounded-md.px-4.py-1.font-display.font-bold.text-2xl.tracking-wider.hover_bg-gold-500.hover_text-gray-900.hover_border-gray-900.transition-all.duration-150.cursor-pointer create new #{categoryItem}
+
+   a(href=`/inventory/${category}`).cursor-pointer.hover_underline.hover_text-gold-500.text-lg return to !{category} list

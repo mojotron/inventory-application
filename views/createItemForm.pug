@@ -21,7 +21,7 @@ block content
         each rarity in itemRarity   
           option(value=`${rarity.name}` data-ability-count= rarity.abilityCount selected=(rarity.name === formInputs.rarity)) #{rarity.name}
 
-    div
+    div.flex.flex-col.gap-2
       h3.font-display.text-3xl pick item bonus abilities
       p selected abilities 
         span(id="ability-counter") 0
@@ -30,7 +30,7 @@ block content
       div(id="ability-list").grid.grid-cols-3.gap-x-2.gap-y-1
         each ability in abilities
           div.space-x-1
-            input(type="checkbox" name=`ability-${ability}` id=`ability-${ability}`)
+            input(type="checkbox" name=`ability-${ability}` id=`ability-${ability}`).cursor-pointer
             label(for=`ability-${ability}`) #{ability}
 
     if errors.length

@@ -10,14 +10,14 @@ html(lang="en")
     
   body.p-3.sm_p-10.flex.flex-col.items-center.gap-6.bg-gray-900.font-sans.text-gray-200.min-w-screen.min-h-screen
     a(href="/")   
-      h1.font-display.uppercase.font-bold.text-6xl.text-center Item Inventory 
+      h1.font-display.uppercase.font-bold.text-6xl.text-center.mb-4 Item Inventory 
     
     if categories
       nav
         ul.flex.items-center.gap-4
           each category in categories
-            li 
-              a(href=`/inventory/${category}`).hover_underline.hover_text-gold-500 !{category} 
+            li.font-display.tracking-widest.text-2xl 
+              a(href=`/inventory/${category}`).hover_underline.hover_text-gold-500 #{category} 
 
     section.w-full.flex.flex-col.items-center.gap-4 
       block content
@@ -25,6 +25,6 @@ html(lang="en")
 
     footer.mt-auto.text-center.pt-16
       span created by 
-      a(href="").hover_text-gold-500 @mojotron
+      a(href="https://github.com/mojotron/inventory-application" target="_blank" rel="noopener noreferrer").hover_text-gold-500 @mojotron
 
     block scripts

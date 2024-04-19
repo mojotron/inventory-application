@@ -1,8 +1,9 @@
 extends layout 
 block content 
 
-  each item in categoryItems
-    ul 
+  h2.font-display.tracking-wildest.text-3xl list of instances in #{categoryName} category
+  ul.flex.flex-col.gap-2
+    each item in categoryItems
       li.flex.items-center
         a(href=`/inventory/${categoryName}/${item.name}`).cursor-pointer.hover_underline.hover_text-gold-500.text-lg #{`${item.name}`}
         if item.count > 0 

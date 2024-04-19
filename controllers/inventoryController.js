@@ -16,7 +16,7 @@ const getCategoryItems = asyncHandler(async (req, res) => {
   }).exec();
 
   if (categoryDoc === null) {
-    return res.json({ msg: `${categoryName} category not exist!` });
+    return res.status(StatusCodes.NOT_FOUND).render('notFound');
   }
 
   const allCategoryItems = await CategoryItem.find({
@@ -56,7 +56,6 @@ const getAllItems = asyncHandler(async (req, res) => {
 
   items = items.map((item) => {
     const rarity = rarityDocs.find((doc) => doc._id.equals(item.itemQuality));
-
     return {
       name: item.name,
       description: item.description,
