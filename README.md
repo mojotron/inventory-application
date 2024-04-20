@@ -11,17 +11,44 @@ Implementation of CRUD application.
 - Express
 - Pug
 - Tailwind CSS
+- Mongo DB with Mongoose
+- Express-validation
 
-### Installing
+### Installing and starting project
 
 1. Clone or fork this repo
 2. cd into the inventory-application directory (where this README is located).
-3. Run npm install
+3. Create .env file and add MONGO_URI variable with your mongo db driver link
+4. run populate.js script with node populate/populate.js
+5. run project with npm run dev
+6. visit http://localhost:5000 and have fun
 
-### Starting the server
+## Screenshots
 
-Run npm start. The server will be found at [http://localhost:5000]
+### Homepage
 
-### Server routes:
+![Home page.](/public/screenshots/screenshot-home-page.png 'This is a sample image.')
 
-- /
+### Category list
+
+![Category list.](/public/screenshots/screenshot-category-list.png 'This is a sample image.')
+
+### Items List
+
+![Items list.](/public/screenshots/screenshot-item-list.png 'This is a sample image.')
+
+### Item Details
+
+![Item details.](/public/screenshots/screenshot-item-details.png.png 'This is a sample image.')
+
+### Create Item Form
+
+![Create Item Form.](/public/screenshots/screenshot-item-form.png 'This is a sample image.')
+
+### Delete Popup
+
+![Delete Popup.](/public/screenshots/screenshot-delete-popup.png 'This is a sample image.')
+
+### Page not found
+
+![Page not found.](/public/screenshots/screenshot-not-found.png 'This is a sample image.')

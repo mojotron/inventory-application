@@ -117,6 +117,7 @@ const createItemGet = asyncHandler(async (req, res) => {
       abilities: [],
     },
     errors: [],
+    actionText: 'create',
   });
 });
 
@@ -139,6 +140,7 @@ const createItemPost = asyncHandler(async (req, res) => {
         rarity: itemRarity,
       },
       errors: errors.errors,
+      actionText: 'create',
     });
     return;
   }
@@ -220,6 +222,7 @@ const updateItemGet = asyncHandler(async (req, res) => {
       abilities: abilityDocs.map((ability) => ability.name),
     },
     errors: [],
+    actionText: 'update',
   });
 });
 
@@ -242,6 +245,7 @@ const updateItemPost = asyncHandler(async (req, res) => {
         rarity: itemRarity,
       },
       errors: errors.errors,
+      actionText: 'update',
     });
     return;
   }
