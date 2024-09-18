@@ -2,17 +2,11 @@ import 'dotenv/config';
 import url from 'node:url';
 import path from 'node:path';
 import express from 'express';
-
+import routes from './routes/index.js';
+// constants
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT || 3000;
-
-// routers
-// const mainRouter = require('./routes/mainRoutes.js');
-// const inventoryRouter = require('./routes/inventoryRoutes.js');
-// app.use('/', mainRouter);
-// app.use('/inventory', inventoryRouter);
-// constants
 
 // const notFoundMiddleware = require('./middleware/notFound.js');
 // const errorHandlerMiddleware = require('./middleware/errorHandler.js');
@@ -27,9 +21,7 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/', (req, res) => {
-  res.status(200).render('pages/index');
-});
+app.use(routes);
 
 const start = async () => {
   try {
