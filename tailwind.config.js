@@ -27,7 +27,6 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-  separator: '_',
   safelist: [
     'text-poor',
     'text-common',
