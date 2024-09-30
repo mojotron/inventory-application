@@ -3,7 +3,18 @@ import pg from 'pg';
 const { Client } = pg;
 
 const SQL = `
+CREATE EXTENSION IN NOT EXISTS "uuid-ossp";
 
+CREATE DATABASE  category (
+  uuid UUID PRIMARY KEY NOT NULL,
+  name VARCHAR(50) UNIQUE NOT NULL,
+);
+
+CREATE DATABASE  item (
+  uuid UUID PRIMARY KEY NOT NULL,
+  category_uuid UUID,
+  FOREIGN KEY (category__uuid) REFERENCE "category" (category_uuid)
+);
 `;
 
 const populate = async () => {
