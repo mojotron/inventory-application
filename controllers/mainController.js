@@ -4,4 +4,8 @@ const getIndexView = (req, res) => {
   return res.status(StatusCodes.OK).render('pages/index');
 };
 
-export { getIndexView };
+const getAboutView = (req, res) => {
+  return res.status(StatusCodes.OK).render('pages/about');
+};
+
+export { getIndexView, getAboutView };

@@ -13,9 +13,7 @@ module.exports = {
         800: '#27272a',
         900: '#18181b',
       },
-      gold: {
-        500: '#f59e0b',
-      },
+      gold: '#f59e0b',
       poor: '#71717a',
       common: '#f5f5f5',
       uncommon: '#22c55e',

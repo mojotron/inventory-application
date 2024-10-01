@@ -8,7 +8,8 @@
     "start": "node server.js",
     "dev": "nodemon server.js",
     "lint": "eslint '**/*.js'",
-    "css:build": "postcss public/styles/tailwind.css -o public/styles/main.css"
+    "css:build": "postcss public/styles/tailwind.css -o public/styles/main.css",
+    "db:populate": "node /db/populate.js"
   },
   "keywords": [],
   "author": "",
