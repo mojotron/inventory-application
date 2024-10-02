@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/main.css" />
+    <title>Inventory | CRUD app</title>
+  </head>
+  <body
+    class="min-w-[100vw] min-h-[100vh] flex flex-col items-center bg-gray-800"
+  >
+    <%- include("../partials/header.ejs", {activePage: "inventory"}) %>
+    <!--  -->
+    <main class="w-full px-10 flex gap-8">
+      <!-- LEFT categories -->
+      <aside>
+        <a href="/inventory/categories">Edit Categories</a>
+
+        <ul>
+          <a href="/inventory/category-a">
+            <li>category a</li>
+          </a>
+        </ul>
+      </aside>
+      <!-- RIGHT items in selected category -->
+      <section>
+        <ul>
+          <li>
+            <article>
+              <h3>Category a</h3>
+            </article>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <!--  -->
+    <%- include("../partials/footer.ejs") %>
+  </body>
+</html>

@@ -526,6 +526,9 @@ video {
 .gap-4{
   gap: 1rem;
 }
+.gap-8{
+  gap: 2rem;
+}
 .border-common{
   --tw-border-opacity: 1;
   border-color: rgb(245 245 245 / var(--tw-border-opacity));

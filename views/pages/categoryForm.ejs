@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/main.css" />
+    <title>Inventory | CRUD app</title>
+  </head>
+  <body
+    class="min-w-[100vw] min-h-[100vh] flex flex-col items-center bg-gray-800"
+  >
+    <%- include("../partials/header.ejs", {activePage: "inventory"}) %>
+    <!--  -->
+    <main class="w-full px-10">
+      <h2>Create New Category</h2>
+      <form action="/inventory/categories/new" method="post">
+        <div>
+          <label for="categoryName">Category Name</label>
+          <input type="text" required/>
+        </div>
+
+        <button type="submit">Create</button>
+      </form>
+    </main>
+    <!--  -->
+    <%- include("../partials/footer.ejs") %>
+  </body>
+</html>
