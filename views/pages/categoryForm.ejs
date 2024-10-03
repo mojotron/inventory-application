@@ -16,7 +16,17 @@
       <form action="/inventory/categories/new" method="post">
         <div>
           <label for="categoryName">Category Name</label>
+          <!-- ADD min 3 max 50 after server tests -->
           <input type="text" required/>
+          <% if(locals.errors) { %>
+            <ul>
+            <% errors.forEach(err => { %>
+              <!--  -->
+              <li><%- err.msg %></li>
+              <!--  -->
+            <% }); %>
+            </ul>
+          <% }; %>
         </div>
 
         <button type="submit">Create</button>

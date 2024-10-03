@@ -1,20 +1,17 @@
+import 'dotenv/config';
 import pg from 'pg';
 
 const { Client } = pg;
 
 const SQL = `
-CREATE EXTENSION IN NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-CREATE DATABASE  category (
+CREATE TABLE category (
   uuid UUID PRIMARY KEY NOT NULL,
-  name VARCHAR(50) UNIQUE NOT NULL,
+  name VARCHAR(50) UNIQUE NOT NULL
 );
 
-CREATE DATABASE  item (
-  uuid UUID PRIMARY KEY NOT NULL,
-  category_uuid UUID,
-  FOREIGN KEY (category__uuid) REFERENCE "category" (category_uuid)
-);
+
 `;
 
 const populate = async () => {
@@ -25,11 +22,17 @@ const populate = async () => {
     await client.query(SQL);
     await client.end();
     console.log('> db populate completed');
-    exit(0);
+    process.exit(0);
   } catch (error) {
     console.log(error);
-    exit(1);
+    process.exit(1);
   }
 };
 
 populate();
+
+// CREATE TABLE item (
+//   uuid UUID PRIMARY KEY NOT NULL,
+//   category_uuid UUID,
+//   FOREIGN KEY (category_uuid) REFERENCE "category" (category_uuid)
+// );
