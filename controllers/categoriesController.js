@@ -1,5 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import { validationResult, matchedData } from 'express-validator';
+import { insertCategory } from '../db/queries.js';
 
 const getCategoriesView = async (req, res, next) => {
   try {
@@ -10,7 +11,12 @@ const getCategoriesView = async (req, res, next) => {
 };
 
 const getCreateCategory = (req, res) => {
-  return res.status(StatusCodes.OK).render('pages/categoryForm');
+  return res.status(StatusCodes.OK).render('pages/categoryForm', {
+    errors: [],
+    values: {
+      categoryName: '',
+    },
+  });
 };
 
 const postCreateCategory = async (req, res, next) => {
@@ -21,9 +27,15 @@ const postCreateCategory = async (req, res, next) => {
       const errors = result.array();
       return res.status(StatusCodes.BAD_REQUEST).render('pages/categoryForm', {
         errors,
+        values: {
+          categoryName: req.body.categoryName,
+        },
       });
     }
-    res.json({ msg: 'success' });
+    const { categoryName } = matchedData(req);
+    await insertCategory(categoryName);
+
+    res.status(StatusCodes.OK).render('pages/categories');
   } catch (error) {
     return next(error);
   }
