@@ -13,14 +13,21 @@
     <!--  -->
     <main class="w-full px-10 flex gap-8">
       <!-- LEFT categories -->
-      <aside>
-        <a href="/inventory/categories">Edit Categories</a>
+      <aside class="flex flex-col gap-4 min-w-[200px]">
+        <a class="block px-4 py-2 rounded-sm border border-uncommon bg-uncommon font-bold text-gray-800 hover:bg-gray-800 hover:text-uncommon" href="/inventory/categories">Edit Categories</a>
 
-        <ul>
-          <a href="/inventory/category-a">
-            <li>category a</li>
-          </a>
-        </ul>
+        <h3 class="font-bold font-display uppercase rounded-sm text-3xl text-gray-200 tracking-wider">Categories</h3>
+        <% if(locals.categories.length > 0) { %>
+          <ul>
+            <% categories.forEach((category) => { %>
+              <a class="block px-1 py-0.5 font-bold text-gray-200 hover:bg-gray-200 hover:text-gray-800" href="/inventory/<%- category %>">
+                <li><%- category %></li>
+              </a>
+            <% }) %>
+          </ul>
+        <% } else { %>
+          <p class="text-poor">no categories yet</p>
+        <% }; %>
       </aside>
       <!-- RIGHT items in selected category -->
       <section>

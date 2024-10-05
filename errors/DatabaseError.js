@@ -1,10 +1,10 @@
 import { StatusCodes } from 'http-status-codes';
 
-class BadRequest extends Error {
-  constructor(message) {
+class DatabaseError extends Error {
+  constructor(message = 'Database Service Unavailable') {
     super(message);
     this.statusCode = StatusCodes.BAD_REQUEST;
   }
 }
 
-export default BadRequest;
+export default DatabaseError;

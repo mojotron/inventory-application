@@ -1,10 +1,13 @@
 import { StatusCodes } from 'http-status-codes';
 import { validationResult, matchedData } from 'express-validator';
-import { insertCategory } from '../db/queries.js';
+import { insertCategory, selectCategories } from '../db/queries.js';
 
 const getCategoriesView = async (req, res, next) => {
   try {
-    return res.status(StatusCodes.OK).render('pages/categories');
+    const categories = await selectCategories();
+    return res.status(StatusCodes.OK).render('pages/categories', {
+      categories: categories.map((cat) => cat.name),
+    });
   } catch (error) {
     return next(error);
   }
@@ -35,7 +38,7 @@ const postCreateCategory = async (req, res, next) => {
     const { categoryName } = matchedData(req);
     await insertCategory(categoryName);
 
-    res.status(StatusCodes.OK).render('pages/categories');
+    res.status(StatusCodes.OK).redirect('/inventory/categories');
   } catch (error) {
     return next(error);
   }
