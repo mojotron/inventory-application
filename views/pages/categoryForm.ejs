@@ -19,10 +19,10 @@
           <!-- ADD min 3 max 50 after server tests -->
           <input class="px-2 py-1 rounded-sm outline-none focus:ring focus:ring-inset focus:ring-uncommon focus:ring-offset-0" type="text" id="categoryName" name="categoryName" value="<%- values.categoryName %>" required/>
           <% if(errors.length > 0) { %>
-            <ul>
+            <ul class="px-2 py-1">
             <% errors.forEach(err => { %>
               <!--  -->
-              <li><%- err.msg %></li>
+              <li class="text-error"><%- err.msg %></li>
               <!--  -->
             <% }); %>
             </ul>
@@ -31,6 +31,8 @@
 
         <button class="block mx-auto px-4 py-2 rounded-sm border border-uncommon bg-uncommon font-bold text-gray-800 hover:bg-gray-800 hover:text-uncommon" type="submit">Create</button>
       </form>
+
+      <a class="text-uncommon mt-8 hover:underline" href="/inventory/categories">return to categories</a>
     </main>
     <!--  -->
     <%- include("../partials/footer.ejs") %>

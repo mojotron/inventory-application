@@ -1,3 +1,4 @@
-const BadRequest = require('./BadRequest');
+import BadRequest from './BadRequest.js';
+import DatabaseError from './DatabaseError.js';
 
-module.exports = { BadRequest };
+export { BadRequest, DatabaseError };

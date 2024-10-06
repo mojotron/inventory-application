@@ -1,6 +1,11 @@
 import { StatusCodes } from 'http-status-codes';
 import { validationResult, matchedData } from 'express-validator';
-import { insertCategory, selectCategories } from '../db/queries.js';
+import {
+  insertCategory,
+  selectCategories,
+  deleteCategory,
+} from '../db/queries.js';
+import { DatabaseError } from '../errors/index.js';
 
 const getCategoriesView = async (req, res, next) => {
   try {
@@ -35,13 +40,53 @@ const postCreateCategory = async (req, res, next) => {
         },
       });
     }
+
     const { categoryName } = matchedData(req);
+
     await insertCategory(categoryName);
 
     res.status(StatusCodes.OK).redirect('/inventory/categories');
+  } catch (error) {
+    if (error instanceof DatabaseError) {
+      return res.status(StatusCodes.BAD_REQUEST).render('pages/categoryForm', {
+        errors: [{ msg: error.message }],
+        values: {
+          categoryName: req.body.categoryName,
+        },
+      });
+    }
+    return next(error);
+  }
+};
+
+const getDeleteCategory = async (req, res, next) => {
+  try {
+    const { categoryName } = req.params;
+
+    return res.status(StatusCodes.OK).render('pages/deleteConfirm', {
+      heading: 'Delete Category',
+      confirmMessage: `You are about to delete ${categoryName} category. Are you sure?`,
+      queryParam: categoryName,
+    });
   } catch (error) {
     return next(error);
   }
 };
 
-export { getCategoriesView, getCreateCategory, postCreateCategory };
+const postDeleteCategory = async (req, res, next) => {
+  try {
+    const { categoryName } = req.params;
+    await deleteCategory(categoryName);
+    return res.status(StatusCodes.OK).redirect('/inventory/categories');
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export {
+  getCategoriesView,
+  getCreateCategory,
+  postCreateCategory,
+  getDeleteCategory,
+  postDeleteCategory,
+};

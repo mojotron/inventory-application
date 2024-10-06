@@ -18,8 +18,19 @@ const insertCategory = async (categoryName) => {
       [categoryName],
     );
   } catch (error) {
+    if (error.code === '23505') {
+      throw new DatabaseError(`${categoryName} category already exists`);
+    }
     throw new DatabaseError();
   }
 };
 
-export { selectCategories, insertCategory };
+const deleteCategory = async (categoryName) => {
+  try {
+    await pool.query('DELETE FROM category WHERE name = $1;', [categoryName]);
+  } catch (error) {
+    throw DatabaseError();
+  }
+};
+
+export { selectCategories, insertCategory, deleteCategory };

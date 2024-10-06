@@ -4,6 +4,8 @@ import {
   getCategoriesView,
   getCreateCategory,
   postCreateCategory,
+  getDeleteCategory,
+  postDeleteCategory,
 } from '../controllers/categoriesController.js';
 import { body } from 'express-validator';
 
@@ -12,6 +14,10 @@ const router = Router();
 router.get('/', getInventoryView);
 // categories
 router.get('/categories', getCategoriesView);
+
+router.get('/categories/:categoryName/delete', getDeleteCategory);
+router.post('/categories/:categoryName/delete', postDeleteCategory);
+
 router.get('/categories/new', getCreateCategory);
 router.post(
   '/categories/new',
