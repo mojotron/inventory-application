@@ -4,6 +4,7 @@ import {
   insertCategory,
   selectCategories,
   deleteCategory,
+  updateCategory,
 } from '../db/queries.js';
 import { DatabaseError } from '../errors/index.js';
 
@@ -21,6 +22,7 @@ const getCategoriesView = async (req, res, next) => {
 const getCreateCategory = (req, res) => {
   return res.status(StatusCodes.OK).render('pages/categoryForm', {
     errors: [],
+    update: false,
     values: {
       categoryName: '',
     },
@@ -35,6 +37,7 @@ const postCreateCategory = async (req, res, next) => {
       const errors = result.array();
       return res.status(StatusCodes.BAD_REQUEST).render('pages/categoryForm', {
         errors,
+        update: false,
         values: {
           categoryName: req.body.categoryName,
         },
@@ -50,6 +53,7 @@ const postCreateCategory = async (req, res, next) => {
     if (error instanceof DatabaseError) {
       return res.status(StatusCodes.BAD_REQUEST).render('pages/categoryForm', {
         errors: [{ msg: error.message }],
+        update: false,
         values: {
           categoryName: req.body.categoryName,
         },
@@ -83,10 +87,62 @@ const postDeleteCategory = async (req, res, next) => {
   }
 };
 
+const getUpdateCategory = async (req, res, next) => {
+  const { categoryName } = req.params;
+
+  try {
+    return res.status(StatusCodes.OK).render('pages/categoryForm', {
+      errors: [],
+      update: true,
+      values: {
+        categoryName: `${categoryName}`,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const postUpdateCategory = async (req, res, next) => {
+  try {
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+      console.log(result);
+      const errors = result.array();
+      return res.status(StatusCodes.BAD_REQUEST).render('pages/categoryForm', {
+        errors,
+        update: true,
+        values: {
+          categoryName: req.body.categoryName,
+        },
+      });
+    }
+
+    const { categoryName } = matchedData(req);
+
+    await updateCategory(req.params.categoryName, categoryName);
+
+    res.status(StatusCodes.OK).redirect('/inventory/categories');
+  } catch (error) {
+    if (error instanceof DatabaseError) {
+      return res.status(StatusCodes.BAD_REQUEST).render('pages/categoryForm', {
+        errors: [{ msg: error.message }],
+        update: true,
+        values: {
+          categoryName: req.body.categoryName,
+        },
+      });
+    }
+    return next(error);
+  }
+};
+
 export {
   getCategoriesView,
   getCreateCategory,
   postCreateCategory,
   getDeleteCategory,
   postDeleteCategory,
+  getUpdateCategory,
+  postUpdateCategory,
 };

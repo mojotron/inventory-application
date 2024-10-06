@@ -33,4 +33,20 @@ const deleteCategory = async (categoryName) => {
   }
 };
 
-export { selectCategories, insertCategory, deleteCategory };
+const updateCategory = async (oldCategoryName, newCategoryName) => {
+  try {
+    const { rows } = await pool.query(
+      'SELECT uuid FROM category WHERE name = $1',
+      [oldCategoryName],
+    );
+    console.log(rows);
+    return;
+  } catch (error) {
+    if (error.code === '23505') {
+      throw new DatabaseError(`${newCategoryName} category already exists`);
+    }
+    throw new DatabaseError();
+  }
+};
+
+export { selectCategories, insertCategory, deleteCategory, updateCategory };

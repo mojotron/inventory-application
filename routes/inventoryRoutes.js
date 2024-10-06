@@ -6,6 +6,8 @@ import {
   postCreateCategory,
   getDeleteCategory,
   postDeleteCategory,
+  getUpdateCategory,
+  postUpdateCategory,
 } from '../controllers/categoriesController.js';
 import { body } from 'express-validator';
 
@@ -30,6 +32,20 @@ router.post(
     .isLength({ min: 3, max: 50 })
     .withMessage('category name must be between 3 and 50 characters long'),
   postCreateCategory,
+);
+
+router.get('/categories/:categoryName/update', getUpdateCategory);
+router.post(
+  '/categories/:categoryName/update',
+  body('categoryName')
+    .trim()
+    .isString()
+    .withMessage('category name must be string')
+    .notEmpty()
+    .withMessage('category name must not be empty value')
+    .isLength({ min: 3, max: 50 })
+    .withMessage('category name must be between 3 and 50 characters long'),
+  postUpdateCategory,
 );
 
 export default router;
