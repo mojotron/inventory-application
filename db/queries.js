@@ -4,7 +4,9 @@ import DatabaseError from '../errors/DatabaseError.js';
 // CATEGORIES
 const selectCategories = async () => {
   try {
-    const { rows } = await pool.query('SELECT * FROM category;');
+    const { rows } = await pool.query(
+      'SELECT * FROM category ORDER BY createdAt DESC;',
+    );
     return rows;
   } catch (error) {
     throw new DatabaseError();
@@ -13,9 +15,10 @@ const selectCategories = async () => {
 
 const insertCategory = async (categoryName) => {
   try {
+    const timestamp = new Date().toISOString();
     await pool.query(
-      'INSERT INTO category (uuid, name) VALUES (uuid_generate_v4(), $1);',
-      [categoryName],
+      'INSERT INTO category (uuid, name, createdAt) VALUES (uuid_generate_v4(), $1, $2);',
+      [categoryName, timestamp],
     );
   } catch (error) {
     if (error.code === '23505') {
@@ -35,12 +38,10 @@ const deleteCategory = async (categoryName) => {
 
 const updateCategory = async (oldCategoryName, newCategoryName) => {
   try {
-    const { rows } = await pool.query(
-      'SELECT uuid FROM category WHERE name = $1',
-      [oldCategoryName],
-    );
-    console.log(rows);
-    return;
+    await pool.query('UPDATE category SET name = $2 WHERE name = $1;', [
+      oldCategoryName,
+      newCategoryName,
+    ]);
   } catch (error) {
     if (error.code === '23505') {
       throw new DatabaseError(`${newCategoryName} category already exists`);

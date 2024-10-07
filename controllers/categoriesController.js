@@ -23,6 +23,7 @@ const getCreateCategory = (req, res) => {
   return res.status(StatusCodes.OK).render('pages/categoryForm', {
     errors: [],
     update: false,
+    actionPath: `/inventory/categories/new`,
     values: {
       categoryName: '',
     },
@@ -37,6 +38,7 @@ const postCreateCategory = async (req, res, next) => {
       const errors = result.array();
       return res.status(StatusCodes.BAD_REQUEST).render('pages/categoryForm', {
         errors,
+        actionPath: `/inventory/categories/new`,
         update: false,
         values: {
           categoryName: req.body.categoryName,
@@ -54,6 +56,7 @@ const postCreateCategory = async (req, res, next) => {
       return res.status(StatusCodes.BAD_REQUEST).render('pages/categoryForm', {
         errors: [{ msg: error.message }],
         update: false,
+        actionPath: `/inventory/categories/new`,
         values: {
           categoryName: req.body.categoryName,
         },
@@ -94,6 +97,7 @@ const getUpdateCategory = async (req, res, next) => {
     return res.status(StatusCodes.OK).render('pages/categoryForm', {
       errors: [],
       update: true,
+      actionPath: `/inventory/categories/${categoryName}/update`,
       values: {
         categoryName: `${categoryName}`,
       },
@@ -112,6 +116,7 @@ const postUpdateCategory = async (req, res, next) => {
       return res.status(StatusCodes.BAD_REQUEST).render('pages/categoryForm', {
         errors,
         update: true,
+        actionPath: `/inventory/categories/${req.body.categoryName}/update`,
         values: {
           categoryName: req.body.categoryName,
         },
@@ -128,6 +133,7 @@ const postUpdateCategory = async (req, res, next) => {
       return res.status(StatusCodes.BAD_REQUEST).render('pages/categoryForm', {
         errors: [{ msg: error.message }],
         update: true,
+        actionPath: `/inventory/categories/${req.body.categoryName}/update`,
         values: {
           categoryName: req.body.categoryName,
         },

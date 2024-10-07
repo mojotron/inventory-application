@@ -6,9 +6,12 @@ const { Client } = pg;
 const SQL = `
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+DROP TABLE IF EXISTS category;
+
 CREATE TABLE category (
   uuid UUID PRIMARY KEY NOT NULL,
-  name VARCHAR(50) UNIQUE NOT NULL
+  name VARCHAR(50) UNIQUE NOT NULL,
+  createdAt TIMESTAMP NOT NULL
 );
 
 
