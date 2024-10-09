@@ -6,14 +6,22 @@ const { Client } = pg;
 const SQL = `
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+DROP TABLE IF EXISTS item;
 DROP TABLE IF EXISTS category;
 
 CREATE TABLE category (
-  uuid UUID PRIMARY KEY NOT NULL,
+  category_uid UUID PRIMARY KEY NOT NULL,
   name VARCHAR(50) UNIQUE NOT NULL,
   createdAt TIMESTAMP NOT NULL
 );
 
+CREATE TABLE item (
+  item_uid UUID PRIMARY KEY NOT NULL,
+  name VARCHAR(50) NOT NULL,
+  description VARCHAR(50) NOT NULL,
+  category_uid UUID REFERENCES category(category_uid),
+  UNIQUE(category_uid)
+);
 
 `;
 
