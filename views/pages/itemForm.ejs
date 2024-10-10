@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/main.css" />
+    <title>Inventory | CRUD app</title>
+  </head>
+  <body
+    class="min-w-[100vw] min-h-[100vh] flex flex-col items-center bg-gray-800"
+  >
+    <%- include("../partials/header.ejs", {activePage: "inventory"}) %>
+    <!--  -->
+    <main class="w-full px-10 flex flex-col items-center gap-4 pt-4">
+      <h2 class="font-display font-bold tracking-wide text-gray-200 text-3xl uppercase"><%= update === true ? "Update Item" : "Create New Item"  %> for <%- categoryName %> category</h2>
+      <form class="w-full sm:w-[480px] space-y-2" action="<%- actionPath %>" method="post">
+        <div class="flex flex-col gap-1">
+          <label class="font-sans text-gray-200" for="itemName">Item Name</label>
+          <!-- ADD min 3 max 50 after server tests -->
+          <input class="px-2 py-1 rounded-sm outline-none focus:ring focus:ring-inset focus:ring-uncommon focus:ring-offset-0" type="text" id="itemName" name="itemName" value="<%- values.itemName %>" required/>          
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="font-sans text-gray-200" for="itemDescription">Item Description</label>
+          <!-- ADD min 3 max 50 after server tests -->
+          <textarea class="px-2 py-1 rounded-sm outline-none focus:ring focus:ring-inset focus:ring-uncommon focus:ring-offset-0" type="text" id="itemDescription" name="itemDescription" required><%- values.itemDescription %></textarea>          
+        </div>
+
+        <% if(errors.length > 0) { %>
+          <ul class="px-2 py-1">
+          <% errors.forEach(err => { %>
+            <!--  -->
+            <li class="text-error"><%- err.msg %></li>
+            <!--  -->
+          <% }); %>
+          </ul>
+        <% }; %>
+
+        <button class="block mx-auto px-4 py-2 rounded-sm border border-uncommon bg-uncommon font-bold text-gray-800 hover:bg-gray-800 hover:text-uncommon" type="submit"><%= update === true ? "Update":"Create" %></button>
+      </form>
+
+      <a class="text-uncommon mt-8 hover:underline" href="/inventory/categories">return to categories</a>
+    </main>
+    <!--  -->
+    <%- include("../partials/footer.ejs") %>
+  </body>
+</html>

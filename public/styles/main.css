@@ -533,6 +533,12 @@ video {
 .min-w-\[200px\]{
   min-width: 200px;
 }
+.flex-grow{
+  flex-grow: 1;
+}
+.flex-grow-0{
+  flex-grow: 0;
+}
 .cursor-pointer{
   cursor: pointer;
 }

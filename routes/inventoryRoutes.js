@@ -1,5 +1,8 @@
 import { Router } from 'express';
-import { getInventoryView } from '../controllers/inventoryController.js';
+import {
+  getInventoryView,
+  getCreateItem,
+} from '../controllers/inventoryController.js';
 import {
   getCategoriesView,
   getCreateCategory,
@@ -14,6 +17,11 @@ import { body } from 'express-validator';
 const router = Router();
 
 router.get('/', getInventoryView);
+router.get('/:categoryName', getInventoryView);
+router.get('/:categoryName/new', getCreateItem);
+
+////////////////////////////////////////////
+
 // categories
 router.get('/categories', getCategoriesView);
 

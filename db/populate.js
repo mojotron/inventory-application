@@ -18,11 +18,12 @@ CREATE TABLE category (
 CREATE TABLE item (
   item_uid UUID PRIMARY KEY NOT NULL,
   name VARCHAR(50) NOT NULL,
-  description VARCHAR(50) NOT NULL,
+  description VARCHAR(250) NOT NULL,
+  quantity INTEGER NOT NULL,
+  price NUMERIC(20,2) NOT NULL,
   category_uid UUID REFERENCES category(category_uid),
   UNIQUE(category_uid)
 );
-
 `;
 
 const populate = async () => {

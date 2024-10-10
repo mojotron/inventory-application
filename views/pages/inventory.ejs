@@ -13,14 +13,14 @@
     <!--  -->
     <main class="w-full px-10 flex gap-8">
       <!-- LEFT categories -->
-      <aside class="flex flex-col gap-4 min-w-[200px]">
+      <aside class="flex flex-col gap-4 min-w-[200px] flex-grow-0">
         <a class="block px-4 py-2 rounded-sm border border-uncommon bg-uncommon font-bold text-gray-800 hover:bg-gray-800 hover:text-uncommon" href="/inventory/categories">Edit Categories</a>
 
         <h3 class="font-bold font-display uppercase rounded-sm text-3xl text-gray-200 tracking-wider">Categories</h3>
         <% if(locals.categories.length > 0) { %>
           <ul>
             <% categories.forEach((category) => { %>
-              <a class="block px-1 py-0.5 font-bold text-gray-200 hover:bg-gray-200 hover:text-gray-800" href="/inventory/<%- category %>">
+              <a class="block px-1 py-0.5 font-bold <%= activeCategory === category ? "text-uncommon" : "text-gray-200"%> hover:bg-gray-200 hover:text-gray-800" href="/inventory/<%- category %>">
                 <li><%- category %></li>
               </a>
             <% }) %>
@@ -30,14 +30,23 @@
         <% }; %>
       </aside>
       <!-- RIGHT items in selected category -->
-      <section>
-        <ul>
-          <li>
-            <article>
-              <h3>Category a</h3>
-            </article>
-          </li>
-        </ul>
+      <section class="flex-grow">
+        <% if (locals.items === null) { %>
+          <p>select category to list items</p>
+        <% } else { %>
+          <header class="flex items-center justify-between">
+            <h3 class="font-bold font-display uppercase rounded-sm text-3xl text-gray-200 tracking-wider"><%- activeCategory %></h3>
+        <a class="block px-4 py-2 rounded-sm border border-uncommon bg-uncommon font-bold text-gray-800 hover:bg-gray-800 hover:text-uncommon" href="/inventory/<%- categories %>/new">Add Item to <%- activeCategory %></a>
+
+          </header>
+          <ul>
+            <% items.forEach((item) => { %>
+              <!--  -->
+              <p>item</p>
+              <!--  -->
+            <% }) %>
+          </ul> 
+        <% }; %>
       </section>
     </main>
     <!--  -->

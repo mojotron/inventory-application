@@ -16,14 +16,16 @@ const selectCategories = async () => {
 const insertCategory = async (categoryName) => {
   try {
     const timestamp = new Date().toISOString();
+
     await pool.query(
-      'INSERT INTO category (uuid, name, createdAt) VALUES (uuid_generate_v4(), $1, $2);',
+      'INSERT INTO category (category_uid, name, createdAt) VALUES (uuid_generate_v4(), $1, $2);',
       [categoryName, timestamp],
     );
   } catch (error) {
     if (error.code === '23505') {
       throw new DatabaseError(`${categoryName} category already exists`);
     }
+    console.log(error);
     throw new DatabaseError();
   }
 };
@@ -49,5 +51,7 @@ const updateCategory = async (oldCategoryName, newCategoryName) => {
     throw new DatabaseError();
   }
 };
+
+// ITEMS
 
 export { selectCategories, insertCategory, deleteCategory, updateCategory };
