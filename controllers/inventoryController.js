@@ -1,5 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import { selectCategories } from '../db/queries.js';
+import { validationResult } from 'express-validator';
 
 const getInventoryView = async (req, res, next) => {
   try {
@@ -44,4 +45,26 @@ const getCreateItem = (req, res) => {
   });
 };
 
-export { getInventoryView, getCreateItem };
+const postCreateItem = async (req, res, next) => {
+  try {
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+      return res.status(StatusCodes.BAD_REQUEST).render('pages/itemForm', {
+        categoryName,
+        update: false,
+        actionPath: 'x',
+        errors: [],
+        values: {
+          itemName: '',
+          itemDescription: '',
+          price: 0,
+          itemQuantity: 0,
+        },
+      });
+    }
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export { getInventoryView, getCreateItem, postCreateItem };

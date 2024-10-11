@@ -26,6 +26,12 @@
           <textarea class="px-2 py-1 rounded-sm outline-none focus:ring focus:ring-inset focus:ring-uncommon focus:ring-offset-0" type="text" id="itemDescription" name="itemDescription" required><%- values.itemDescription %></textarea>          
         </div>
 
+        <div class="flex flex-col gap-1">
+          <label class="font-sans text-gray-200" for="itemPrice">Item Price</label>
+          <!-- ADD min 3 max 50 after server tests -->
+          <input class="px-2 py-1 rounded-sm outline-none focus:ring focus:ring-inset focus:ring-uncommon focus:ring-offset-0" type="number" id="itemPrice" name="itemPrice" value="<%- values.itemPrice %>" required/>          
+        </div>
+
         <% if(errors.length > 0) { %>
           <ul class="px-2 py-1">
           <% errors.forEach(err => { %>
