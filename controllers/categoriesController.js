@@ -23,7 +23,7 @@ const getCreateCategory = (req, res) => {
   return res.status(StatusCodes.OK).render('pages/categoryForm', {
     errors: [],
     update: false,
-    actionPath: `/inventory/categories/new`,
+    actionPath: `/categories/new`,
     values: {
       categoryName: '',
     },
@@ -38,7 +38,7 @@ const postCreateCategory = async (req, res, next) => {
       const errors = result.array();
       return res.status(StatusCodes.BAD_REQUEST).render('pages/categoryForm', {
         errors,
-        actionPath: `/inventory/categories/new`,
+        actionPath: `/categories/new`,
         update: false,
         values: {
           categoryName: req.body.categoryName,
@@ -50,13 +50,13 @@ const postCreateCategory = async (req, res, next) => {
 
     await insertCategory(categoryName);
 
-    res.status(StatusCodes.OK).redirect('/inventory/categories');
+    res.status(StatusCodes.OK).redirect('/categories');
   } catch (error) {
     if (error instanceof DatabaseError) {
       return res.status(StatusCodes.BAD_REQUEST).render('pages/categoryForm', {
         errors: [{ msg: error.message }],
         update: false,
-        actionPath: `/inventory/categories/new`,
+        actionPath: `/categories/new`,
         values: {
           categoryName: req.body.categoryName,
         },
@@ -73,7 +73,8 @@ const getDeleteCategory = async (req, res, next) => {
     return res.status(StatusCodes.OK).render('pages/deleteConfirm', {
       heading: 'Delete Category',
       confirmMessage: `You are about to delete ${categoryName} category. Are you sure?`,
-      queryParam: categoryName,
+      actionPath: `/categories/${categoryName}/delete`,
+      cancelPath: `/categories`,
     });
   } catch (error) {
     return next(error);
@@ -84,7 +85,7 @@ const postDeleteCategory = async (req, res, next) => {
   try {
     const { categoryName } = req.params;
     await deleteCategory(categoryName);
-    return res.status(StatusCodes.OK).redirect('/inventory/categories');
+    return res.status(StatusCodes.OK).redirect('/categories');
   } catch (error) {
     return next(error);
   }
@@ -97,7 +98,7 @@ const getUpdateCategory = async (req, res, next) => {
     return res.status(StatusCodes.OK).render('pages/categoryForm', {
       errors: [],
       update: true,
-      actionPath: `/inventory/categories/${categoryName}/update`,
+      actionPath: `/categories/${categoryName}/update`,
       values: {
         categoryName: `${categoryName}`,
       },
@@ -116,7 +117,7 @@ const postUpdateCategory = async (req, res, next) => {
       return res.status(StatusCodes.BAD_REQUEST).render('pages/categoryForm', {
         errors,
         update: true,
-        actionPath: `/inventory/categories/${req.body.categoryName}/update`,
+        actionPath: `/categories/${req.body.categoryName}/update`,
         values: {
           categoryName: req.body.categoryName,
         },
@@ -127,13 +128,13 @@ const postUpdateCategory = async (req, res, next) => {
 
     await updateCategory(req.params.categoryName, categoryName);
 
-    res.status(StatusCodes.OK).redirect('/inventory/categories');
+    res.status(StatusCodes.OK).redirect('/categories');
   } catch (error) {
     if (error instanceof DatabaseError) {
       return res.status(StatusCodes.BAD_REQUEST).render('pages/categoryForm', {
         errors: [{ msg: error.message }],
         update: true,
-        actionPath: `/inventory/categories/${req.body.categoryName}/update`,
+        actionPath: `/categories/${req.body.categoryName}/update`,
         values: {
           categoryName: req.body.categoryName,
         },
