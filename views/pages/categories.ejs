@@ -17,6 +17,7 @@
       <section class="flex flex-col gap-4">
         <a class="block w-[180px] px-4 py-2 rounded-sm border border-uncommon bg-uncommon font-bold text-gray-800 hover:bg-gray-800 hover:text-uncommon" href="/categories/new">Add new Category</a>
         
+        
         <h3 class="font-bold font-display uppercase rounded-sm text-3xl text-gray-200 tracking-wider">Categories</h3>
 
         <% if(locals.categories.length > 0) { %>
@@ -34,6 +35,8 @@
         <% } else { %>
           <p class="text-poor">no categories yet</p>
         <% }; %>
+
+        <a class="text-uncommon hover:underline" href="/inventory">return to inventory</a>
       </section>
     </main>
     <!--  -->
