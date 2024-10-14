@@ -5,6 +5,7 @@ import {
   selectItemByCategoryAndName,
   selectItemsByCategory,
   deleteItem,
+  updateItem,
 } from '../db/queries.js';
 import { validationResult, matchedData } from 'express-validator';
 import DatabaseError from '../errors/DatabaseError.js';
@@ -168,8 +169,54 @@ const getUpdateItem = async (req, res) => {
 
 const postUpdateItem = async (req, res, next) => {
   try {
-    return res.send('HELLO');
+    const { categoryName } = req.params;
+
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+      return res.status(StatusCodes.BAD_REQUEST).render('pages/itemForm', {
+        categoryName,
+        update: true,
+        actionPath: `/inventory/${categoryName}/${req.params.itemName}/update`,
+        errors: result.array(),
+        values: {
+          itemName: req.body.itemName,
+          itemDescription: req.body.itemDescription,
+          price: req.body.itemPrice,
+          itemQuantity: req.body.itemQuantity,
+        },
+      });
+    }
+
+    const { itemName, itemDescription, itemPrice, itemQuantity } =
+      matchedData(req);
+
+    await updateItem(
+      categoryName,
+      req.body.itemName,
+      itemName,
+      itemDescription,
+      itemQuantity,
+      itemPrice,
+    );
+
+    return res
+      .status(StatusCodes.OK)
+      .redirect(`/inventory/${categoryName}/${req.params.itemName}`);
   } catch (error) {
+    if (error instanceof DatabaseError) {
+      return res.status(StatusCodes.BAD_REQUEST).render('pages/itemForm', {
+        categoryName: req.params.categoryName,
+        update: true,
+        actionPath: `/inventory/${req.params.categoryName}/${req.params.itemName}/update`,
+        errors: [{ msg: error.message }],
+        values: {
+          itemName: req.body.itemName,
+          itemDescription: req.body.itemDescription,
+          price: req.body.itemPrice,
+          itemQuantity: req.body.itemQuantity,
+        },
+      });
+    }
     return next(error);
   }
 };

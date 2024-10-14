@@ -137,11 +137,47 @@ const deleteItem = async (categoryName, itemName) => {
   try {
     const categoryUid = await getCategoryUid(categoryName);
 
-    await pool.query('DELETE FROM item WHERE category_uid = $1 AND name = $2', [
+    await pool.query('DELETE item SET WHERE category_uid = $1 AND name = $2', [
       categoryUid,
       itemName,
     ]);
   } catch (error) {
+    throw new DatabaseError();
+  }
+};
+
+const updateItem = async (
+  categoryName,
+  oldItemName,
+  newItemName,
+  itemDescription,
+  itemQuantity,
+  itemPrice,
+) => {
+  try {
+    const categoryUid = await getCategoryUid(categoryName);
+
+    await pool.query(
+      `
+    UPDATE item
+    SET name = $3, description = $4, quantity = $5, price = $6
+    WHERE category_uid = $1 AND name = $2;`,
+      [
+        categoryUid,
+        oldItemName,
+        newItemName,
+        itemDescription,
+        itemQuantity,
+        itemPrice,
+      ],
+    );
+  } catch (error) {
+    console.log(error);
+    if (error.code === '23505') {
+      throw new DatabaseError(
+        `${itemName} item already exists in ${categoryName} category`,
+      );
+    }
     throw new DatabaseError();
   }
 };
@@ -155,4 +191,5 @@ export {
   selectItemsByCategory,
   selectItemByCategoryAndName,
   deleteItem,
+  updateItem,
 };
