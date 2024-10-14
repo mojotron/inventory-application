@@ -4,6 +4,10 @@ import {
   getCreateItem,
   postCreateItem,
   getInventoryItemDetails,
+  getDeleteItem,
+  postDeleteItem,
+  getUpdateItem,
+  postUpdateItem,
 } from '../controllers/inventoryController.js';
 
 import { body } from 'express-validator';
@@ -44,8 +48,9 @@ router.post(
   postCreateItem,
 );
 router.get('/:categoryName/:itemName', getInventoryItemDetails);
-////////////////////////////////////////////
-
-// categories
+router.get('/:categoryName/:itemName/delete', getDeleteItem);
+router.post('/:categoryName/:itemName/delete', postDeleteItem);
+router.get('/:categoryName/:itemName/update', getUpdateItem);
+router.post('/:categoryName/:itemName/update', postUpdateItem);
 
 export default router;

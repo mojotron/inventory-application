@@ -4,6 +4,7 @@ import {
   selectCategories,
   selectItemByCategoryAndName,
   selectItemsByCategory,
+  deleteItem,
 } from '../db/queries.js';
 import { validationResult, matchedData } from 'express-validator';
 import DatabaseError from '../errors/DatabaseError.js';
@@ -119,9 +120,67 @@ const getInventoryItemDetails = async (req, res, next) => {
   }
 };
 
+const getDeleteItem = (req, res) => {
+  const { categoryName, itemName } = req.params;
+
+  res.status(StatusCodes.OK).render('pages/deleteConfirm', {
+    heading: 'Delete Item',
+    confirmMessage: `You are about to delete ${itemName} item in ${categoryName} category. Are you sure?`,
+    actionPath: `/inventory/${categoryName}/${itemName}/delete`,
+    cancelPath: `/inventory/${categoryName}/${itemName}`,
+  });
+};
+
+const postDeleteItem = async (req, res, next) => {
+  try {
+    const { categoryName, itemName } = req.params;
+
+    await deleteItem(categoryName, itemName);
+
+    res.status(StatusCodes.OK).redirect(`/inventory/${categoryName}`);
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const getUpdateItem = async (req, res) => {
+  try {
+    const { categoryName, itemName } = req.params;
+
+    const details = await selectItemByCategoryAndName(categoryName, itemName);
+
+    return res.status(StatusCodes.OK).render('pages/itemForm', {
+      categoryName,
+      update: true,
+      actionPath: `/inventory/${categoryName}/${itemName}/update`,
+      errors: [],
+      values: {
+        itemName: details.name,
+        itemDescription: details.description,
+        itemPrice: details.price,
+        itemQuantity: details.quantity,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const postUpdateItem = async (req, res, next) => {
+  try {
+    return res.send('HELLO');
+  } catch (error) {
+    return next(error);
+  }
+};
+
 export {
   getInventoryView,
   getCreateItem,
   postCreateItem,
   getInventoryItemDetails,
+  getDeleteItem,
+  postDeleteItem,
+  getUpdateItem,
+  postUpdateItem,
 };

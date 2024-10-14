@@ -133,6 +133,19 @@ const selectItemByCategoryAndName = async (categoryName, itemName) => {
   }
 };
 
+const deleteItem = async (categoryName, itemName) => {
+  try {
+    const categoryUid = await getCategoryUid(categoryName);
+
+    await pool.query('DELETE FROM item WHERE category_uid = $1 AND name = $2', [
+      categoryUid,
+      itemName,
+    ]);
+  } catch (error) {
+    throw new DatabaseError();
+  }
+};
+
 export {
   selectCategories,
   insertCategory,
@@ -141,4 +154,5 @@ export {
   insertItem,
   selectItemsByCategory,
   selectItemByCategoryAndName,
+  deleteItem,
 };
