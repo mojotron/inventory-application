@@ -72,7 +72,7 @@ const getDeleteCategory = async (req, res, next) => {
 
     return res.status(StatusCodes.OK).render('pages/deleteConfirm', {
       heading: 'Delete Category',
-      confirmMessage: `You are about to delete ${categoryName} category. Are you sure?`,
+      confirmMessage: `You are about to delete ${categoryName.toUpperCase()} category and ALL items it this category. Are you sure?`,
       actionPath: `/categories/${categoryName}/delete`,
       cancelPath: `/categories`,
     });

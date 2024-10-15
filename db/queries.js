@@ -19,7 +19,7 @@ const getCategoryUid = async (categoryName) => {
 const selectCategories = async () => {
   try {
     const { rows } = await pool.query(
-      'SELECT * FROM category ORDER BY createdAt DESC;',
+      'SELECT * FROM category ORDER BY created_at DESC;',
     );
     return rows;
   } catch (error) {
@@ -32,23 +32,30 @@ const insertCategory = async (categoryName) => {
     const timestamp = new Date().toISOString();
 
     await pool.query(
-      'INSERT INTO category (category_uid, name, createdAt) VALUES (uuid_generate_v4(), $1, $2);',
+      'INSERT INTO category (category_uid, name, created_at) VALUES (uuid_generate_v4(), $1, $2);',
       [categoryName, timestamp],
     );
   } catch (error) {
     if (error.code === '23505') {
       throw new DatabaseError(`${categoryName} category already exists`);
     }
-    console.log(error);
     throw new DatabaseError();
   }
 };
 
 const deleteCategory = async (categoryName) => {
   try {
-    await pool.query('DELETE FROM category WHERE name = $1;', [categoryName]);
+    const categoryUid = await getCategoryUid(categoryName);
+    // remove all items holding reference to category first
+    await pool.query('DELETE FROM item WHERE category_uid = $1;', [
+      categoryUid,
+    ]);
+    // remove category
+    await pool.query('DELETE FROM category WHERE category_uid = $1;', [
+      categoryUid,
+    ]);
   } catch (error) {
-    throw DatabaseError();
+    throw new DatabaseError();
   }
 };
 
@@ -82,7 +89,7 @@ const insertItem = async (
     await pool.query(
       `
     INSERT INTO item 
-    (item_uid, name, description, quantity, price, createdAt, category_uid) 
+    (item_uid, name, description, quantity, price, created_at, category_uid) 
     VALUES (uuid_generate_v4(), $1, $2, $3, $4, $5, $6);`,
       [
         itemName,
@@ -137,7 +144,7 @@ const deleteItem = async (categoryName, itemName) => {
   try {
     const categoryUid = await getCategoryUid(categoryName);
 
-    await pool.query('DELETE item SET WHERE category_uid = $1 AND name = $2', [
+    await pool.query('DELETE FROM item WHERE category_uid = $1 AND name = $2', [
       categoryUid,
       itemName,
     ]);
@@ -172,7 +179,6 @@ const updateItem = async (
       ],
     );
   } catch (error) {
-    console.log(error);
     if (error.code === '23505') {
       throw new DatabaseError(
         `${itemName} item already exists in ${categoryName} category`,

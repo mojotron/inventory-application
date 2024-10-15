@@ -28,8 +28,6 @@ const getInventoryView = async (req, res, next) => {
 
     const items = await selectItemsByCategory(categoryName);
 
-    console.log(items);
-
     return res.status(StatusCodes.OK).render('pages/inventory', {
       categories,
       activeCategory,
@@ -51,8 +49,8 @@ const getCreateItem = (req, res) => {
     values: {
       itemName: '',
       itemDescription: '',
-      itemPrice: 0,
-      itemQuantity: 0,
+      itemPrice: 1.0,
+      itemQuantity: 1,
     },
   });
 };
@@ -107,7 +105,9 @@ const postCreateItem = async (req, res, next) => {
 };
 
 const getInventoryItemDetails = async (req, res, next) => {
+  console.log('WORKING HERE');
   const { categoryName, itemName } = req.params;
+  console.log(categoryName, itemName);
   const details = await selectItemByCategoryAndName(categoryName, itemName);
   console.log(details);
   try {
@@ -192,7 +192,7 @@ const postUpdateItem = async (req, res, next) => {
 
     await updateItem(
       categoryName,
-      req.body.itemName,
+      req.params.itemName,
       itemName,
       itemDescription,
       itemQuantity,
@@ -201,7 +201,7 @@ const postUpdateItem = async (req, res, next) => {
 
     return res
       .status(StatusCodes.OK)
-      .redirect(`/inventory/${categoryName}/${req.params.itemName}`);
+      .redirect(`/inventory/${categoryName}/${itemName}`);
   } catch (error) {
     if (error instanceof DatabaseError) {
       return res.status(StatusCodes.BAD_REQUEST).render('pages/itemForm', {
