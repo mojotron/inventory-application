@@ -1,0 +1,21 @@
+<!-- params:
+  categoryList: [array of categories],
+  activeCategory: string value of selected category
+-->
+<aside class="flex flex-col gap-1 min-w-[200px] flex-grow-0">
+  <%- include("./ctaLink.ejs", {actionPath: "/categories",text: "Edit Categories"}) %>
+  <%- include("./blockHeading.ejs", {text: "Categories"}) %>
+  
+  
+  <% if(categoryList.length > 0) { %>
+    <ul>
+      <% categoryList.forEach((category) => { %>
+        <a class="block px-1 py-0.5 font-bold <%= activeCategory === category ? "text-red-500" : "text-gray-200"%> hover:bg-red-200 hover:text-white" href="/inventory/<%- category %>">
+          <li><%- category %></li>
+        </a>
+      <% }) %>
+    </ul>
+  <% } else { %>
+    <p class="font-sans text-gray-200">no categories created</p>
+  <% }; %>
+</aside>

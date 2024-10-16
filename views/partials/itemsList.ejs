@@ -1,0 +1,25 @@
+<!-- params:
+  listList: [array of {item objects}],
+  activeCategory: string value of selected category
+-->
+<% if (itemsList.length > 0) { %>
+  <ul class="py-4 space-y-2">
+    <% itemsList.forEach((item) => { %>
+      <!--  -->
+      <li class="flex items-center justify-between border border-red-200 rounded-md py-1 px-2 hover:shadow-sm hover:shadow-gray-200">
+        <div>
+          <h4 class="font-display font-bold text-lg text-red-200"><%- item.name %></h3>
+          <%- include("./paragraph.ejs", {text: `${item.quantity} units`}) %>
+          <%- include("./paragraph.ejs", {text: `${item.price} EUR per unit`}) %>
+
+        </div>
+        
+        <%- include("./ctaLink", {actionPath: `/inventory/${activeCategory}/${item.name}`, text: 'View Details'}) %>
+        
+      </li>
+      <!--  -->
+    <% }) %>
+  </ul> 
+<% } else { %>
+  <p class="font-sans text-gray-200">no items created</p>
+<% }; %>
