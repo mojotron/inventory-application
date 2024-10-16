@@ -7,11 +7,27 @@
     <title>Inventory | CRUD app</title>
   </head>
   <body
-    class="min-w-[100vw] min-h-[100vh] flex flex-col items-center bg-gray-800"
+    class="min-w-[100vw] min-h-[100vh] flex flex-col items-center bg-white"
   >
+  <!-- activePage values ["home","inventory", "about"] -->
     <%- include("../partials/header.ejs", {activePage: "home"}) %>
     <!--  -->
-    <main></main>
+    <main class="p-4 flex flex-col items-center gap-4 max-w-[480px] text-center">
+      <%- include("../partials/pageHeading.ejs", {text: "Storage Manager"}) %>
+      <%- include("../partials/paragraph.ejs", {text: "Simple application for keeping track of your store inventory."}) %>
+      
+      <div class="flex flex-col items-center">
+        <h3 class="font-display font-bold text-lg text-gray-500">Create Category</h3>
+        <%- include("../partials/paragraph.ejs", {text: "Start by creating categories to group items."}) %>
+        <%- include("../partials/ctaLink.ejs", {actionPath: "/categories", text: "Categories"}) %>
+      </div>
+
+      <div class="flex flex-col items-center">
+        <h3 class="font-display font-bold text-lg text-gray-500">Manage Items</h3>
+        <%- include("../partials/paragraph.ejs", {text: "Add items to category and manage your store."}) %>
+        <%- include("../partials/ctaLink.ejs", {actionPath: "/inventory", text: "Inventory"}) %>
+      </div>
+    </main>
     <!--  -->
     <%- include("../partials/footer.ejs") %>
   </body>

@@ -1,30 +1,30 @@
 <header
-  class="w-full py-8 px-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-start sm:items-end sm:gap-8"
+  class="w-full p-4 flex flex-col items-center gap-1 sm:flex-row sm:justify-start sm:items-end sm:gap-8"
 >
   <div>
     <h1
-      class="font-display font-bold text-5xl text-gray-200 uppercase tracking-wide"
+      class="font-display font-bold text-xl sm:text-2xl text-black uppercase"
     >
       Inventory Manager
     </h1>
-    <p class="text-gray-200 font-sans text-lg">keep track of your storage</p>
+    <p class="text-gray-200 font-sans font-thin text-lg">keep track of your storage</p>
   </div>
 
-  <nav class="font-sans font-bold text-gray-200">
-    <ul class="flex items-center">
+  <nav class="font-sans text-gray-200 font-bold">
+    <ul class="flex items-center gap-2">
       <a
       href="/"
-        class="text-<%= activePage == "home" ? "legendary" : "gray-200" %> px-2 py-0.5 cursor-pointer hover:text-gray-800 hover:bg-gray-200"
+        class="<%= activePage == "home" ? "text-red-200" : "text-gray-200" %> cursor-pointer hover:text-red-500"
         ><li>home</li></a
       >
       <a
       href="/inventory"
-        class="text-<%= activePage == "inventory" ? "legendary" : "gray-200" %> px-2 py-0.5 cursor-pointer hover:text-gray-800 hover:bg-gray-200"
+        class="<%= activePage == "inventory" ? "text-red-200" : "text-gray-200" %> cursor-pointer hover:text-red-500"
         ><li>inventory</li></a
       >
       <a
       href="/about"
-        class="text-<%= activePage == "about" ? "legendary" : "gray-200" %> px-2 py-0.5 cursor-pointer hover:text-gray-800 hover:bg-gray-200"
+        class="<%= activePage == "about" ? "text-red-200" : "text-gray-200" %> cursor-pointer hover:text-red-500"
         ><li>about</li></a
       >
     </ul>

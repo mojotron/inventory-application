@@ -7,11 +7,26 @@
     <title>Inventory | CRUD app</title>
   </head>
   <body
-    class="min-w-[100vw] min-h-[100vh] flex flex-col items-center bg-gray-800"
+    class="min-w-[100vw] min-h-[100vh] flex flex-col items-center bg-white"
   >
+  <!-- activePage values ["home","inventory", "about"] -->
     <%- include("../partials/header.ejs", {activePage: "about"}) %>
     <!--  -->
-    <main></main>
+    <main class="p-4 flex flex-col items-center gap-4 max-w-[480px] text-center">
+      <%- include("../partials/pageHeading.ejs", {text: "About this project"}) %>
+      <%- include("../partials/paragraph.ejs", {text: "Goal of this project is creating an Inventory management app for an imaginary store. It’s up to the user what kind of business this is – you could be managing groceries, car parts, baby-toys, musical-instruments, ponies or anything!"}) %>
+      
+      <%- include("../partials/paragraph.ejs", {text: "Inventory app have categories and items, so when the user goes to the inventory page they can choose a category to view, and then get a list of every item in that category. CRUD methods are included for both items and categories, so anybody that’s visiting the site can Create, Read, Update or Delete any Item or Category."}) %>
+      
+      <%- include("../partials/paragraph.ejs", {text: "This project is part of The Odin Project curriculum. The Odin Project empowers aspiring web developers to learn together for free."}) %>
+
+      <p class="text-gray-500">
+        <span>Visit</span>
+        <a class="text-gray-800 font-bold hover:text-red-200" href="https://www.theodinproject.com/" target="_blank" rel="noopener noreferrer">The Odin Project</a>
+        <span>and start learning web development.</span>
+      </p>
+    </main>
+
     <!--  -->
     <%- include("../partials/footer.ejs") %>
   </body>
