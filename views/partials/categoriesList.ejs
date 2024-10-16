@@ -1,0 +1,20 @@
+<!-- params:
+  categoryList: [array of categories]
+-->
+
+<% if(categoryList.length > 0) { %>
+  <ul class="flex flex-col gap-2">
+    <% categoryList.forEach((category) => { %>
+      <li class="px-4 py-2 flex justify-between items-center rounded-md border border-red-200">
+        <h4 class="font-bold text-lg text-gray-800"><%- category %></h4>
+        <div class="flex items-center gap-2">
+          <%- include("./ctaLink.ejs", {actionPath: `/inventory/${category}`, text: "Select"}) %>
+          <%- include("./ctaLink.ejs", {actionPath: `/categories/${category}/update`, text: "Edit"}) %>
+          <%- include("./ctaLink.ejs", {actionPath: `/categories/${category}/delete`, text: "Delete"}) %>
+        </div>
+      </li>
+    <% }) %>
+  </ul>
+<% } else { %>
+  <p class="font-sans text-gray-200">no categories created</p>
+<% }; %>
