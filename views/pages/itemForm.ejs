@@ -7,53 +7,47 @@
     <title>Inventory | CRUD app</title>
   </head>
   <body
-    class="min-w-[100vw] min-h-[100vh] flex flex-col items-center bg-gray-800"
+    class="min-w-[100vw] min-h-[100vh] flex flex-col items-center bg-white"
   >
     <%- include("../partials/header.ejs", {activePage: "inventory"}) %>
     <!--  -->
     <main class="w-full px-10 flex flex-col items-center gap-4 pt-4">
-      <h2 class="font-display font-bold tracking-wide text-gray-200 text-3xl uppercase"><%= update === true ? "Update Item" : "Create New Item"  %> for <%- categoryName %> category</h2>
-      <form class="w-full sm:w-[480px] space-y-2" action="<%- actionPath %>" method="post">
-        <div class="flex flex-col gap-1">
-          <label class="font-sans text-gray-200" for="itemName">Item Name</label>
-          <!-- ADD min 3 max 50 after server tests -->
-          <input class="px-2 py-1 rounded-sm outline-none focus:ring focus:ring-inset focus:ring-uncommon focus:ring-offset-0" type="text" id="itemName" name="itemName" value="<%- values.itemName %>" required/>          
-        </div>
+      <%- include("../partials/pageHeading.ejs", {
+        text: `${update === true ? "Update" : "Create New"} Item in ${categoryName} Category`
+      }) %>
 
-        <div class="flex flex-col gap-1">
-          <label class="font-sans text-gray-200" for="itemDescription">Item Description</label>
-          <!-- ADD min 3 max 50 after server tests -->
-          <textarea class="px-2 py-1 rounded-sm outline-none focus:ring focus:ring-inset focus:ring-uncommon focus:ring-offset-0" type="text" id="itemDescription" name="itemDescription" required><%- values.itemDescription %></textarea>          
-        </div>
-
-        <div class="flex flex-col gap-1">
-          <label class="font-sans text-gray-200" for="itemQuantity">Item Quantity</label>
-          <!-- ADD min 3 max 50 after server tests -->
-          <input class="px-2 py-1 rounded-sm outline-none focus:ring focus:ring-inset focus:ring-uncommon focus:ring-offset-0" type="number" id="itemQuantity" name="itemQuantity" value="<%- values.itemQuantity %>" required/>          
-        </div>
-
-        <div class="flex flex-col gap-1">
-          <label class="font-sans text-gray-200" for="itemPrice">Item Price (EUR)</label>
-          <!-- ADD min 3 max 50 after server tests -->
-          <input class="px-2 py-1 rounded-sm outline-none focus:ring focus:ring-inset focus:ring-uncommon focus:ring-offset-0" type="number" id="itemPrice" name="itemPrice" value="<%- values.itemPrice %>" required/>          
-        </div>
-
-       
-
-        <% if(errors.length > 0) { %>
-          <ul class="px-2 py-1">
-          <% errors.forEach(err => { %>
-            <!--  -->
-            <li class="text-error"><%- err.msg %></li>
-            <!--  -->
-          <% }); %>
-          </ul>
-        <% }; %>
-
-        <button class="block mx-auto px-4 py-2 rounded-sm border border-uncommon bg-uncommon font-bold text-gray-800 hover:bg-gray-800 hover:text-uncommon" type="submit"><%= update === true ? "Update":"Create" %></button>
+      <form class="w-full sm:w-[480px] flex flex-col gap-2" action="<%- actionPath %>" method="post">
+        <!-- input fields -->
+        <%- include("../partials/formInput.ejs", {
+          labelText: "Item Name",
+          nameId: "itemName",
+          inputType: "text",
+          inputValue: values.itemName
+        }) %>
+        <%- include("../partials/formInput.ejs", {
+          labelText: "Item Description",
+          nameId: "itemDescription",
+          inputType: "textarea",
+          inputValue: values.itemDescription
+        }) %>
+        <%- include("../partials/formInput.ejs", {
+          labelText: "Item Quantity",
+          nameId: "itemQuantity",
+          inputType: "integer",
+          inputValue: values.itemQuantity
+        }) %>
+        <%- include("../partials/formInput.ejs", {
+          labelText: "Item Price",
+          nameId: "itemPrice",
+          inputType: "float",
+          inputValue: values.itemPrice
+        }) %>
+        <!-- input errors -->
+        <%- include("../partials/formErrors.ejs", {errorsList: errors}) %>
+        <!-- submit button -->
+        <%- include("../partials/formButton.ejs", {text: `${update === true ? "Update":"Create"}`}) %>
       </form>
 
-      <a class="text-uncommon mt-8 hover:underline" href="/inventory/categories">return to categories</a>
     </main>
     <!--  -->
     <%- include("../partials/footer.ejs") %>

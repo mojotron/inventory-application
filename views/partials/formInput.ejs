@@ -1,0 +1,52 @@
+<!-- props:
+  labelText: display label text
+  nameId: value for/id and name attributes
+  inputType: text, integer, float or textarea
+  inputValue: default input value
+-->
+<!-- ADD min 3 max 50 after server tests -->
+<div class="flex flex-col gap-1">
+  <label class="font-sans text-lg text-gray-500" for="<%- nameId %>"
+    ><%- labelText %></label
+  >
+  <% if(inputType === 'textarea') { %> 
+    <textarea 
+      class="px-2 py-1 text-red-200 font-bold text-md rounded-md border border-red-200 outline-none focus:ring focus:ring-inset focus:ring-red-200 focus:ring-offset-0"
+      id="<%- nameId %>"
+      name="<%- nameId %>" 
+      required>
+      <%- inputValue %>
+    </textarea> 
+  <% } else if (inputType === 'integer') { %>
+    <input 
+      class="px-2 py-1 text-red-200 font-bold text-md rounded-md border border-red-200 outline-none focus:ring focus:ring-inset focus:ring-red-200 focus:ring-offset-0"
+      type="number"
+      id="<%- nameId %>"
+      name="<%- nameId %>"
+      value="<%- inputValue %>"
+      min="0"
+      step="1"
+      required
+    /> 
+  <% } else if (inputType === 'float') { %>
+    <input 
+      class="px-2 py-1 text-red-200 font-bold text-md rounded-md border border-red-200 outline-none focus:ring focus:ring-inset focus:ring-red-200 focus:ring-offset-0"
+      type="number"
+      id="<%- nameId %>"
+      name="<%- nameId %>"
+      value="<%- inputValue %>"
+      min="0"
+      step="0.01"
+      required
+    /> 
+  <% } else { %>
+    <input
+      class="px-2 py-1 text-red-200 font-bold text-md rounded-md border border-red-200 outline-none focus:ring focus:ring-inset focus:ring-red-200 focus:ring-offset-0"
+      type="text"
+      id="<%- nameId %>"
+      name="<%- nameId %>"
+      value="<%- inputValue %>"
+      required
+    />
+  <% } %>
+</div>

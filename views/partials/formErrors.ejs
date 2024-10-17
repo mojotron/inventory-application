@@ -1,0 +1,12 @@
+<!-- props:
+  errorsList - [array of error objects, {msg: error message text}],
+-->
+<% if(errorsList.length > 0) { %>
+  <ul class="px-2 py-1 space-y-1">
+  <% errorsList.forEach(err => { %>
+    <!--  -->
+    <li class="text-white font-bold bg-gray-500 px-2 py-0.5 rounded-md"><%- err.msg %></li>
+    <!--  -->
+  <% }); %>
+  </ul>
+<% }; %>

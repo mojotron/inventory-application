@@ -1,0 +1,14 @@
+<!-- props:
+  text: string
+  value: number
+  unit: string EUR, PCS...
+-->
+<p class="text-md">
+  <span class="font-sans text-gray-500">
+    <%- text %>
+  </span>
+  <span 
+    class="font-display font-bold text-red-200">
+    <%- `${value} ${unit}` %>
+  </span>
+</p>

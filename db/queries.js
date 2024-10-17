@@ -188,6 +188,21 @@ const updateItem = async (
   }
 };
 
+// SEARCH
+const selectItemsBySearch = async (searchTerm) => {
+  try {
+    const { rows } = await pool.query(
+      `SELECT item.name as item, category.name as category FROM item
+      INNER JOIN category ON item.category_uid = category.category_uid
+      WHERE item.name LIKE $1;`,
+      [`%${searchTerm}%`],
+    );
+    return rows;
+  } catch (error) {
+    throw new DatabaseError();
+  }
+};
+
 export {
   selectCategories,
   insertCategory,
@@ -198,4 +213,5 @@ export {
   selectItemByCategoryAndName,
   deleteItem,
   updateItem,
+  selectItemsBySearch,
 };

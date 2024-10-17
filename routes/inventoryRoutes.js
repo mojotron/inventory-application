@@ -24,7 +24,7 @@ router.post(
       .trim()
       .notEmpty()
       .isString()
-      .isLength({ min: 1, max: 50 })
+      .isLength({ min: 0, max: 50 })
       .withMessage('Item Name must be string with maximum of 50 characters'),
     body('itemDescription')
       .trim()

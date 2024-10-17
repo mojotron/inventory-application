@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/main.css" />
+    <title>Inventory | CRUD app</title>
+  </head>
+  <body
+    class="min-w-[100vw] min-h-[100vh] flex flex-col items-center bg-white"
+  >
+  <!-- activePage values ["home","inventory", "about"] -->
+    <%- include("../partials/header.ejs", {activePage: "home"}) %>
+    <!--  -->
+    <main class="p-4 flex flex-col items-center gap-4 max-w-[480px] text-center">
+      <%- include("../partials/pageHeading.ejs", {text: `Search Results for ${searchTerm}`}) %>
+
+      <% if(searchResult.length > 0) { %>
+        <ul class="w-full space-y-2">
+          <% searchResult.forEach(result => { %>
+            <li class="px-4 py-2 border border-red-200 rounded-md flex items-center justify-between gap-2 hover:shadow-sm hover:shadow-gray-200">
+              <p class="text-gray-800 font-bold"><%- `${result.item} in ${result.category} category` %></p>
+              <div>
+                <%- include("../partials/ctaLink.ejs", {
+                  actionPath: `/inventory/${result.category}/${result.item}`,
+                  text: "Details"
+                }) %>
+                <%- include("../partials/ctaLink.ejs", {
+                  actionPath: `/inventory/${result.category}/`,
+                  text: `Inventory`
+                }) %>
+              </div>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p class="text-gray-200">no results found</p>
+      <% } %>
+    </main>
+    <!--  -->
+    <%- include("../partials/footer.ejs") %>
+  </body>
+</html>
