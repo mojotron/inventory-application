@@ -10,11 +10,6 @@ const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT || 3000;
 
-// const notFoundMiddleware = require('./middleware/notFound.js');
-// const errorHandlerMiddleware = require('./middleware/errorHandler.js');
-// app.use(notFoundMiddleware);
-// app.use(errorHandlerMiddleware);
-
 const app = express();
 
 app.set('views', path.join(__dirname, 'views'));

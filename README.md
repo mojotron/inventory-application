@@ -1,6 +1,6 @@
 # Inventory Application
 
-Live 👉[preview]() of the project, hosted by Glitch.
+Live 👉[preview](https://gregarious-dandelion-van.glitch.me/) of the project, hosted by Glitch.
 
 This project is part of [The Odin Project](https://www.theodinproject.com/lessons/nodejs-inventory-application#project-solution) curriculum.
 
