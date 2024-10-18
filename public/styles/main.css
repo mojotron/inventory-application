@@ -544,6 +544,9 @@ video {
 .items-center{
   align-items: center;
 }
+.justify-center{
+  justify-content: center;
+}
 .justify-between{
   justify-content: space-between;
 }
@@ -788,10 +791,6 @@ video {
 
   .sm\:items-end{
     align-items: flex-end;
-  }
-
-  .sm\:justify-start{
-    justify-content: flex-start;
   }
 
   .sm\:gap-8{

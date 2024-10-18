@@ -1,7 +1,10 @@
-const { StatusCodes } = require('http-status-codes');
+import { StatusCodes } from 'http-status-codes';
 
-const notFoundMiddleware = (req, res) => {
-  res.status(StatusCodes.NOT_FOUND).render('notFound');
+const notFoundMiddleware = (req, res, next) => {
+  return res.status(StatusCodes.NOT_FOUND).render('pages/error', {
+    heading: 'Page not Found (404)',
+    text: 'Resources you are looking do not exist!',
+  });
 };
 
-module.exports = notFoundMiddleware;
+export default notFoundMiddleware;

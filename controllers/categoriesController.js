@@ -34,7 +34,6 @@ const postCreateCategory = async (req, res, next) => {
   try {
     const result = validationResult(req);
     if (!result.isEmpty()) {
-      console.log(result);
       const errors = result.array();
       return res.status(StatusCodes.BAD_REQUEST).render('pages/categoryForm', {
         errors,
@@ -48,7 +47,7 @@ const postCreateCategory = async (req, res, next) => {
 
     const { categoryName } = matchedData(req);
 
-    await insertCategory(categoryName);
+    await insertCategory(categoryName.toLowerCase());
 
     res.status(StatusCodes.OK).redirect('/categories');
   } catch (error) {
@@ -112,7 +111,6 @@ const postUpdateCategory = async (req, res, next) => {
   try {
     const result = validationResult(req);
     if (!result.isEmpty()) {
-      console.log(result);
       const errors = result.array();
       return res.status(StatusCodes.BAD_REQUEST).render('pages/categoryForm', {
         errors,

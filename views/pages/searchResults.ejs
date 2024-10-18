@@ -18,7 +18,7 @@
       <% if(searchResult.length > 0) { %>
         <ul class="w-full space-y-2">
           <% searchResult.forEach(result => { %>
-            <li class="px-4 py-2 border border-red-200 rounded-md flex items-center justify-between gap-2 hover:shadow-sm hover:shadow-gray-200">
+            <li class="px-4 py-2 border border-red-200 rounded-md flex flex-col items-center justify-between gap-2 hover:shadow-sm hover:shadow-gray-200">
               <p class="text-gray-800 font-bold"><%- `${result.item} in ${result.category} category` %></p>
               <div>
                 <%- include("../partials/ctaLink.ejs", {

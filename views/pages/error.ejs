@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/main.css" />
+    <title>Inventory | CRUD app</title>
+  </head>
+  <body
+    class="min-w-[100vw] min-h-[100vh] flex flex-col items-center bg-white"
+  >
+    <%- include("../partials/header.ejs", {activePage: ""}) %>
+    <!--  -->
+    <main class="p-4 flex flex-col items-center gap-4 max-w-[480px] text-center">
+      <%- include("../partials/pageHeading.ejs", {text: heading}) %>
+      <%- include("../partials/paragraph.ejs", {text: text}) %>
+      <%- include("../partials/ctaLink.ejs", {actionPath: "/inventory", text: "Return to Inventory"}) %>
+    </main>
+    <!--  -->
+    <%- include("../partials/footer.ejs") %>
+  </body>
+</html>

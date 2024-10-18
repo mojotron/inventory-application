@@ -19,7 +19,7 @@ const getCategoryUid = async (categoryName) => {
 const selectCategories = async () => {
   try {
     const { rows } = await pool.query(
-      'SELECT * FROM category ORDER BY created_at DESC;',
+      'SELECT * FROM category ORDER BY name ASC;',
     );
     return rows;
   } catch (error) {

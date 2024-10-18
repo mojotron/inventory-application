@@ -3,6 +3,8 @@ import url from 'node:url';
 import path from 'node:path';
 import express from 'express';
 import routes from './routes/index.js';
+import notFoundMiddleware from './middleware/notFound.js';
+import errorHandlerMiddleware from './middleware/errorHandler.js';
 // constants
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,6 +24,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 
 app.use(routes);
+
+app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
 
 const start = async () => {
   try {
