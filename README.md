@@ -41,7 +41,7 @@ Inventory app have categories and items, so when the user goes to the home-page 
 
 ### Item Details
 
-![Item details.](/public/screenshots/screenshot-item.png.png 'This is a sample image.')
+![Item details.](/public/screenshots/screenshot-item.png 'This is a sample image.')
 
 ### Item Form
 
